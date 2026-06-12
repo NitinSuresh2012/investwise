@@ -1,4 +1,4 @@
-# InvestWise Preview
+# InvestWise
 
 InvestWise is a teen-friendly investing education and simulator web app.
 
@@ -14,7 +14,7 @@ InvestWise is a teen-friendly investing education and simulator web app.
 
 ## Run Locally
 
-This preview is a static site. Open `index.html` directly or run:
+This is a static site. Open `index.html` directly or run:
 
 ```bash
 node server.mjs

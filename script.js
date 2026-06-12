@@ -1,3 +1,19 @@
+const quoteSnapshot = {
+  updatedLabel: "Jun 11, 2026 11:39 PM ET",
+  officialCloseDate: "Jun 11, 2026",
+  prices: {
+    NVDA: { current: 205.62, close: 204.87, label: "extended-hours" },
+    GOOGL: { current: 360.93, close: 357.77, label: "extended-hours" },
+    AAPL: { current: 295.53, close: 295.63, label: "extended-hours" },
+    MSFT: { current: 392.69, close: 390.34, label: "extended-hours" },
+    AMZN: { current: 241.93, close: 241.51, label: "extended-hours" },
+    AVGO: { current: 386.81, close: 385.57, label: "extended-hours" },
+    META: { current: 572.31, close: 568.43, label: "extended-hours" },
+    TSLA: { current: 399.23, close: 399.15, label: "extended-hours" },
+    LLY: { current: 1161.42, close: 1160.95, label: "extended-hours" }
+  }
+};
+
 const assets = [
   ["NVDA", "Nvidia", "stock", 145.88, "Nvidia designs chips used for AI training, gaming, and data centers.", 82],
   ["MSFT", "Microsoft", "stock", 468.35, "Microsoft earns money from software, cloud computing, gaming, and AI tools.", 48],
@@ -9,7 +25,10 @@ const assets = [
   ["VOO", "Vanguard S&P 500", "etf", 551.2, "VOO tracks about 500 large US companies.", 38],
   ["SPY", "SPDR S&P 500", "etf", 596.4, "SPY is a popular ETF that follows the S&P 500.", 39],
   ["VTI", "Vanguard Total Market", "etf", 302.65, "VTI includes thousands of US stocks for broad diversification.", 35]
-].map(([symbol, name, type, price, insight, risk]) => ({ symbol, name, type, price, insight, risk, sector: coreAssetSector(symbol, type) }));
+].map(([symbol, name, type, price, insight, risk]) => {
+  const snapshot = quoteSnapshot?.prices?.[symbol];
+  return { symbol, name, type, price: snapshot?.current || price, insight, risk, sector: coreAssetSector(symbol, type) };
+});
 
 function coreAssetSector(symbol, type) {
   if (type === "etf") {
@@ -434,6 +453,7 @@ let budget = { rent: 1400, food: 520, transportation: 240, entertainment: 280, s
 let selectedSimSymbol = "VTI";
 
 const money = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+const moneyExact = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
 const pct = value => new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 0 }).format(value);
 const assetBySymbol = symbol => assets.find(asset => asset.symbol === symbol);
 const simAssetBySymbol = symbol => simulatorAssets.find(asset => asset.symbol === symbol);
@@ -803,6 +823,8 @@ function renderMarketCapLeaders() {
     const stock = topStocks.find(item => item.symbol === leader.symbol);
     const name = stock?.name || leader.symbol;
     const sector = stock?.sector || "Mega cap";
+    const quote = quoteSnapshot.prices[leader.symbol];
+    const change = quote ? (quote.current - quote.close) / quote.close : null;
     return `
       <article class="leader-card" data-leader="${leader.symbol}" tabindex="0" role="button" aria-label="Open ${name} details">
         <div class="logo-wrap">
@@ -811,6 +833,7 @@ function renderMarketCapLeaders() {
         </div>
         <span class="leader-rank">Market cap #${leader.rank}</span>
         <h4>${leader.symbol} · ${name}</h4>
+        ${quote ? `<div class="leader-price"><b>${moneyExact(quote.current)}</b><span>${change >= 0 ? "+" : ""}${(change * 100).toFixed(2)}%</span></div>` : ""}
         <p>${leader.marketCap} · ${sector}</p>
         <p>${leader.note}</p>
       </article>
@@ -849,6 +872,10 @@ function openStockDetail(symbol) {
   if (!stock) return;
   const [does, why, risks] = companyDetails[symbol] || defaultDetail(stock);
   const capLeader = marketCapRanks[symbol];
+  const quote = quoteSnapshot.prices[symbol];
+  const quoteBox = quote
+    ? `<div class="detail-box"><b>Current price snapshot</b><p>${moneyExact(quote.current)} ${quote.label}, updated ${quoteSnapshot.updatedLabel}. Official close: ${moneyExact(quote.close)} on ${quoteSnapshot.officialCloseDate}.</p></div>`
+    : "";
   document.getElementById("stockDetail").innerHTML = `
     <div class="detail-hero">
       <div class="logo-wrap">
@@ -864,6 +891,7 @@ function openStockDetail(symbol) {
       <div class="detail-box"><b>What it does</b><p>${does}</p></div>
       <div class="detail-box"><b>Why investors watch it</b><p>${why}</p></div>
       <div class="detail-box"><b>Main risks</b><p>${risks}</p></div>
+      ${quoteBox}
       <div class="detail-box"><b>Beginner takeaway</b><p>${capLeader ? `Market cap rank #${capLeader.rank}: ${capLeader.note}. ` : ""}${stockLens(stock)}. Learn what drives the business before comparing price, growth, debt, valuation, and analyst expectations.</p></div>
     </div>
     <div class="detail-links">

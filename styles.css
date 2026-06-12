@@ -150,6 +150,10 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .platform-links a { border-radius: 999px; background: var(--mint); color: #07100c; padding: 8px 11px; font-size: 12px; font-weight: 1000; text-decoration: none; }
 .check-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin-top: 14px; }
 .market-cap-leaders { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0; }
+.quote-strip { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
+.quote-strip h4 { margin: 0; font-size: 20px; }
+.quote-strip p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; }
+.quote-strip span { flex: 0 0 auto; border-radius: 999px; background: rgba(251,113,133,.14); color: var(--coral); padding: 8px 11px; font-weight: 1000; font-size: 12px; }
 .leader-card {
   border: 1px solid rgba(57,229,140,.22); border-radius: 22px; background: linear-gradient(145deg, rgba(57,229,140,.12), var(--panel));
   padding: 14px; cursor: pointer; transition: transform .18s ease, border-color .18s ease;
@@ -159,6 +163,9 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .leader-rank { color: var(--mint); font-weight: 1000; font-size: 13px; }
 .leader-card h4 { margin: 8px 0 3px; font-size: 17px; }
 .leader-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.leader-price { display: flex; align-items: baseline; gap: 8px; margin-top: 9px; }
+.leader-price b { color: var(--text); font-size: 20px; }
+.leader-price span { color: var(--mint); font-size: 12px; font-weight: 1000; }
 .top-stock-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
 .stock-tile {
   border: 1px solid var(--line); border-radius: 22px; background: var(--panel); padding: 14px;
@@ -215,6 +222,7 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
   .top-stock-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .market-cap-leaders { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .platform-grid, .check-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quote-strip { align-items: flex-start; flex-direction: column; }
   .phone { min-height: 320px; }
 }
 
