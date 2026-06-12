@@ -154,6 +154,13 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .platform-logo { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 18px; background: #fff; border: 1px solid var(--line); }
 .platform-logo img { width: 34px; height: 34px; object-fit: contain; }
 .platform-logo span { display: none; color: #0f172a; font-size: 13px; font-weight: 1000; }
+.platform-logo.built-in { width: auto; min-width: 92px; padding: 8px 10px; place-items: center; }
+.brand-mark { display: flex; align-items: center; gap: 8px; color: #0f172a; font-weight: 1000; line-height: 1; }
+.brand-mark i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 10px; font-style: normal; font-size: 15px; }
+.brand-mark.fidelity i { background: #07833d; color: #fff; }
+.brand-mark.fidelity strong { color: #07833d; font-size: 13px; }
+.brand-mark.greenlight i { background: #00c853; color: #062d16; }
+.brand-mark.greenlight strong { color: #00a846; font-size: 15px; }
 .platform-card h4 { margin: 0; font-size: 22px; }
 .platform-card .tag { border-radius: 999px; background: rgba(57,229,140,.13); color: var(--mint); padding: 6px 9px; font-size: 12px; font-weight: 1000; }
 .platform-card p { color: var(--muted); line-height: 1.55; margin: 10px 0 0; }

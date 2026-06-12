@@ -922,10 +922,7 @@ function renderPlatforms() {
           <h4>${platform.name}</h4>
           <span class="tag">${platform.tag}</span>
         </div>
-        <div class="platform-logo">
-          <img src="${platformLogoUrl(platform.logo)}" alt="${platform.name} logo" loading="lazy" data-platform-logo-index="0" onerror="advancePlatformLogo(this, '${platform.logo}')">
-          <span>${platform.name.split(" ").map(word => word[0]).join("").slice(0, 3)}</span>
-        </div>
+        ${platformLogoMarkup(platform)}
       </div>
       <p>${platform.bestFor}</p>
       <div class="platform-facts">
@@ -987,6 +984,21 @@ function defaultLessonDetail(title) {
 
 function platformLogoUrl(slug) {
   return platformLogoSources(slug)[0];
+}
+
+function platformLogoMarkup(platform) {
+  if (platform.logo === "fidelity") {
+    return `<div class="platform-logo built-in" aria-label="Fidelity Youth logo"><div class="brand-mark fidelity"><i>F</i><strong>Fidelity<br>Youth</strong></div></div>`;
+  }
+  if (platform.logo === "greenlight") {
+    return `<div class="platform-logo built-in" aria-label="Greenlight logo"><div class="brand-mark greenlight"><i>G</i><strong>Greenlight</strong></div></div>`;
+  }
+  return `
+    <div class="platform-logo">
+      <img src="${platformLogoUrl(platform.logo)}" alt="${platform.name} logo" loading="lazy" data-platform-logo-index="0" onerror="advancePlatformLogo(this, '${platform.logo}')">
+      <span>${platform.name.split(" ").map(word => word[0]).join("").slice(0, 3)}</span>
+    </div>
+  `;
 }
 
 function platformLogoSources(slug) {
@@ -1127,30 +1139,30 @@ function valuationLens(stock) {
   if (["Energy", "Financials", "Consumer Staples", "Utilities"].includes(sector)) {
     return {
       status: "undervalued",
-      label: "Potentially undervalued",
+      label: "Undervalued",
       reason: "This sector often trades on cash flow, dividends, or steadier earnings instead of high growth hype."
     };
   }
   if (["Information Technology", "Consumer Discretionary", "Communication Services"].includes(sector)) {
     return {
       status: "overvalued",
-      label: "Potentially overvalued",
+      label: "Overvalued",
       reason: "Growth sectors can become expensive when investors expect fast future earnings."
     };
   }
   return {
     status: "fair",
-    label: "Fair/watchlist",
+    label: "Fair",
     reason: "The business should be compared with earnings growth, debt, margins, competition, and analyst expectations."
   };
 }
 
 function labelForValuation(status) {
   return {
-    undervalued: "Potentially undervalued",
-    fair: "Fair/watchlist",
-    overvalued: "Potentially overvalued"
-  }[status] || "Fair/watchlist";
+    undervalued: "Undervalued",
+    fair: "Fair",
+    overvalued: "Overvalued"
+  }[status] || "Fair";
 }
 
 function defaultDetail(stock) {
