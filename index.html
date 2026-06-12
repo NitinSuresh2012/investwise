@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>InvestWise Preview</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">↗</div>
+          <div>
+            <p>InvestWise</p>
+            <h1>Learn money. Practice investing.</h1>
+          </div>
+        </div>
+        <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">☾</button>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="pill">Level 4 Money Builder</span>
+          <h2>A finance practice app built for first-time investors.</h2>
+          <p>Learn budgeting, saving, ETFs, diversification, risk, and long-term wealth habits before touching real money.</p>
+          <strong>Simulated trading only. No real orders.</strong>
+        </div>
+        <div class="phone">
+          <div class="phone-top">
+            <span>Portfolio</span>
+            <b>$24,810</b>
+          </div>
+          <div class="chart-line"></div>
+          <div class="mini-row"><span>VOO</span><b>32%</b></div>
+          <div class="mini-row"><span>QQQ</span><b>24%</b></div>
+          <div class="mini-row"><span>NVDA</span><b>18%</b></div>
+          <div class="mini-row"><span>Cash</span><b>26%</b></div>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="Sections">
+        <button class="active" data-tab="learn">Learn</button>
+        <button data-tab="etfs">ETFs</button>
+        <button data-tab="sim">Simulator</button>
+        <button data-tab="budget">Budget</button>
+        <button data-tab="topstocks">Top 100</button>
+        <button data-tab="platforms">Platforms</button>
+        <button data-tab="coach">FinCoach</button>
+        <button data-tab="watch">Watchlist</button>
+      </nav>
+
+      <main>
+        <section id="learn" class="panel active">
+          <div class="section-title">
+            <p>Beginner curriculum</p>
+            <h3>Lessons that build real money instincts</h3>
+          </div>
+          <div class="grid three">
+            <article class="card">
+              <div class="card-head"><h4>Money Basics</h4><span>84%</span></div>
+              <div class="progress"><i style="width:84%"></i></div>
+              <ul>
+                <li>Needs vs Wants</li><li>Saving Money</li><li>Emergency Funds</li><li>Avoiding Debt</li><li>Compound Growth</li>
+              </ul>
+            </article>
+            <article class="card">
+              <div class="card-head"><h4>Investing Basics</h4><span>62%</span></div>
+              <div class="progress"><i style="width:62%"></i></div>
+              <ul>
+                <li>What is a stock?</li><li>What is an ETF?</li><li>Why ETFs are safer</li><li>Diversification</li><li>Risk vs Reward</li>
+              </ul>
+            </article>
+            <article class="card">
+              <div class="card-head"><h4>Popular Stocks</h4><span>48%</span></div>
+              <div class="progress"><i style="width:48%"></i></div>
+              <ul>
+                <li>Nvidia</li><li>Microsoft</li><li>Apple</li><li>Broadcom</li><li>Micron</li>
+              </ul>
+            </article>
+          </div>
+          <div class="grid two stocks"></div>
+        </section>
+
+        <section id="etfs" class="panel">
+          <div class="section-title">
+            <p>ETF education</p>
+            <h3>Diversification made visible</h3>
+          </div>
+          <div class="grid four etf-grid"></div>
+          <div class="grid two">
+            <article class="card compare">
+              <div class="card-head"><h4>ETF Portfolio</h4><span>Score 92</span></div>
+              <div class="bar wide">Microsoft</div>
+              <div class="bar med">Nvidia</div>
+              <div class="bar small">Apple</div>
+              <div class="bar tiny">Amazon</div>
+              <p>Many companies share the work, so one bad day from a single stock hurts less.</p>
+            </article>
+            <article class="card compare">
+              <div class="card-head"><h4>Single Stock Portfolio</h4><span>Score 38</span></div>
+              <div class="bar single">Only Nvidia</div>
+              <p>One company can grow fast, but your result depends on one business doing well.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="sim" class="panel">
+          <div class="section-title">
+            <p>$10,000 virtual account</p>
+            <h3>Buy, sell, and study the outcome</h3>
+          </div>
+          <div class="grid two">
+            <article class="card">
+              <div class="stats">
+                <div><span>Total value</span><b id="totalValue">$0</b></div>
+                <div><span>Cash</span><b id="cashValue">$10,000</b></div>
+                <div><span>Diversification</span><b id="divScore">0/100</b></div>
+                <div><span>Daily gain</span><b class="green">+$180</b></div>
+              </div>
+              <div class="donut-wrap">
+                <div class="donut"></div>
+                <p>Allocation donut</p>
+              </div>
+            </article>
+            <article class="card">
+              <div class="trade">
+                <div class="asset-picker">
+                  <input id="assetSearch" placeholder="Search 300 stocks by symbol or company..." autocomplete="off" />
+                  <div id="assetResults" class="asset-results"></div>
+                </div>
+                <button id="buyBtn">Buy 1</button>
+              </div>
+              <div id="selectedAsset" class="selected-asset"></div>
+              <div id="holdings"></div>
+            </article>
+          </div>
+          <div class="grid three">
+            <article class="card score-card"><span>Risk score</span><b id="riskScore">44</b><p>Lower is steadier. ETFs help smooth single-stock swings.</p></article>
+            <article class="card score-card"><span>ETF percentage</span><b id="etfPct">58%</b><p>Broad ETFs can hold hundreds or thousands of companies.</p></article>
+            <article class="card score-card"><span>Sector exposure</span><b>Balanced</b><p>Software, chips, broad market ETFs, and cash.</p></article>
+          </div>
+        </section>
+
+        <section id="budget" class="panel">
+          <div class="section-title">
+            <p>$4,000 monthly salary</p>
+            <h3>Budget decisions change your score</h3>
+          </div>
+          <div class="grid two">
+            <article class="card budget-controls"></article>
+            <article class="card">
+              <div class="stats vertical">
+                <div><span>Savings rate</span><b id="saveRate">39%</b></div>
+                <div><span>Net worth growth</span><b id="growth">$1,560</b></div>
+                <div><span>Financial score</span><b id="financeScore">100/100</b></div>
+              </div>
+              <p class="hint">A healthy beginner target is saving and investing at least 20% while keeping flexible spending under control.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="coach" class="panel">
+          <div class="section-title">
+            <p>FinCoach</p>
+            <h3>Ask beginner questions without the pressure</h3>
+          </div>
+          <article class="card coach">
+            <div class="trade">
+              <input id="coachQuestion" value="What is an ETF?" />
+              <button id="coachBtn">Ask</button>
+            </div>
+            <div id="coachAnswer" class="answer">An ETF is a basket of investments you can buy with one ticker, like getting a diversified starter pack. Educational purposes only.</div>
+          </article>
+        </section>
+
+        <section id="platforms" class="panel">
+          <div class="section-title">
+            <p>Real-world next steps</p>
+            <h3>Platforms teens and beginners can learn about</h3>
+          </div>
+          <article class="card platform-intro">
+            <h4>Pick the structure before the app</h4>
+            <p>Teens usually need a parent or guardian involved. Some products are teen-owned accounts with parent visibility, some are custodial accounts managed by an adult, and some are parent-approved learning apps. InvestWise is still the practice zone before any real money.</p>
+            <div class="source-stack">
+              <a href="https://www.fidelity.com/go/youth-account/overview" target="_blank" rel="noreferrer">Fidelity Youth source</a>
+              <a href="https://robinhood.com/us/en/support/articles/open-my-account/" target="_blank" rel="noreferrer">Robinhood source</a>
+              <a href="https://greenlight.com/investing-for-kids" target="_blank" rel="noreferrer">Greenlight source</a>
+            </div>
+          </article>
+          <div class="platform-grid"></div>
+          <article class="card platform-checklist">
+            <h4>Before using any real platform</h4>
+            <div class="check-grid">
+              <span>Parent or guardian understands the account type</span>
+              <span>No margin, options, short selling, or crypto for beginners</span>
+              <span>Start with small amounts and broad ETFs</span>
+              <span>Know fees, taxes, and account ownership rules</span>
+              <span>Use education first, trading second</span>
+              <span>Educational purposes only</span>
+            </div>
+          </article>
+        </section>
+
+        <section id="topstocks" class="panel">
+          <div class="section-title">
+            <p>Large US companies</p>
+            <h3>Top 100 stock symbols to learn</h3>
+          </div>
+          <article class="card top-stock-tool">
+            <div class="trade">
+              <input id="stockSearch" placeholder="Search by symbol, company, or sector..." />
+              <select id="sectorFilter" aria-label="Filter by sector"></select>
+            </div>
+            <div class="source-stack">
+              <a href="https://www.spglobal.com/spdji/en/indices/equity/sp-100/" target="_blank" rel="noreferrer">S&amp;P Dow Jones</a>
+              <a href="https://www.ishares.com/us/products/239723/ishares-sp-100-etf" target="_blank" rel="noreferrer">BlackRock OEF Holdings</a>
+              <a href="https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/" target="_blank" rel="noreferrer">CompaniesMarketCap</a>
+              <a href="https://www.nasdaq.com/market-activity/stocks" target="_blank" rel="noreferrer">Nasdaq Research</a>
+            </div>
+            <p class="source-note">Curated from S&amp;P 100-style large-cap US constituents, then enriched with market-cap and analyst-research source links. Static preview data is educational, not live market data.</p>
+          </article>
+          <div class="market-cap-leaders"></div>
+          <div class="top-stock-grid"></div>
+        </section>
+
+        <section id="watch" class="panel">
+          <div class="section-title">
+            <p>Watchlist</p>
+            <h3>Track prices with educational context</h3>
+          </div>
+          <div class="grid three watch-grid"></div>
+        </section>
+      </main>
+    </div>
+    <div id="stockModal" class="modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+      <article class="modal-card">
+        <button class="modal-close" data-close-modal aria-label="Close stock details">×</button>
+        <div id="stockDetail"></div>
+      </article>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
