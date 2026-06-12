@@ -128,6 +128,11 @@ select, input { min-width: 0; width: 100%; border: 1px solid var(--line); border
 .budget-control label { display: flex; justify-content: space-between; font-weight: 1000; margin-bottom: 8px; text-transform: capitalize; }
 input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .answer { margin-top: 14px; color: var(--text); line-height: 1.7; }
+.coach-response { display: grid; gap: 12px; }
+.coach-response div { border-radius: 18px; background: color-mix(in srgb, var(--panel-2) 78%, transparent); padding: 12px; }
+.coach-response b { color: var(--mint); }
+.coach-response p { margin: 6px 0 0; color: var(--muted); line-height: 1.55; }
+.coach-response .disclaimer { color: var(--coral); font-weight: 1000; }
 .source-note { margin: 12px 0 0; color: var(--muted); line-height: 1.55; }
 .source-stack { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
 .source-stack a, .mini-source {

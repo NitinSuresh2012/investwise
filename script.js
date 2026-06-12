@@ -685,18 +685,78 @@ function updateBudget() {
 }
 
 function setupCoach() {
-  const answers = {
-    etf: "An ETF is a basket of investments that trades with one ticker. It can help beginners diversify without picking only one company.",
-    qqq: "QQQ is an ETF that tracks many large Nasdaq companies, with a lot of exposure to technology and growth businesses.",
-    micron: "Micron makes memory and storage chips used in AI servers, phones, PCs, cars, and data centers.",
-    diversification: "Diversification means spreading money across different investments so one bad result has less power over the whole portfolio.",
-    compound: "Compound growth means gains can earn more gains over time. Time is a powerful ingredient."
+  const topics = {
+    etf: {
+      words: ["etf", "voo", "spy", "vti"],
+      label: "ETF basics",
+      answer: "An ETF is a basket of investments you buy with one ticker. It can hold many companies at once, which helps beginners avoid depending on only one stock.",
+      next: "Compare one ETF, like VOO or VTI, against one single stock and notice how much broader the ETF is."
+    },
+    qqq: {
+      words: ["qqq", "nasdaq"],
+      label: "QQQ and growth stocks",
+      answer: "QQQ is an ETF focused on many large Nasdaq companies. It has a lot of technology and growth exposure, so it can rise fast but also move around more.",
+      next: "Look at QQQ's top holdings and ask whether you are comfortable with a tech-heavy basket."
+    },
+    micron: {
+      words: ["micron", "mu", "memory"],
+      label: "Micron and semiconductors",
+      answer: "Micron makes memory and storage chips used in AI servers, phones, PCs, cars, and data centers. Its business can be cyclical because memory prices move up and down.",
+      next: "Compare Micron with Nvidia: both are chip companies, but they make different parts of the AI hardware stack."
+    },
+    diversification: {
+      words: ["diversification", "diversify", "diversified"],
+      label: "Diversification",
+      answer: "Diversification means spreading money across different investments. If one company has a bad week, the rest of the portfolio can help balance it out.",
+      next: "Check your simulator allocation and see if one stock is too large compared with the rest."
+    },
+    compound: {
+      words: ["compound", "interest", "growth"],
+      label: "Compound growth",
+      answer: "Compound growth means your gains can start earning gains too. The longer money stays invested, the more time it has to build on itself.",
+      next: "Try increasing savings or investing in the budget simulator and watch how net worth growth changes."
+    },
+    risk: {
+      words: ["risk", "safe", "reward", "lose money"],
+      label: "Risk and reward",
+      answer: "Risk is the chance an investment loses value or does worse than expected. Reward is the possible gain you hope to earn for taking that risk.",
+      next: "Use ETFs for a steadier beginner example, then compare them with a high-growth single stock."
+    }
   };
-  document.getElementById("coachBtn").addEventListener("click", () => {
-    const question = document.getElementById("coachQuestion").value.toLowerCase();
-    const key = Object.keys(answers).find(item => question.includes(item)) || "etf";
-    document.getElementById("coachAnswer").textContent = `${answers[key]} Educational purposes only.`;
+
+  function respond() {
+    const rawQuestion = document.getElementById("coachQuestion").value.trim();
+    const question = rawQuestion.toLowerCase();
+    const topic = Object.values(topics).find(item => item.words.some(word => question.includes(word))) || topics.etf;
+    const summary = rawQuestion
+      ? `You are asking about: "${rawQuestion}"`
+      : "You are asking for a beginner investing explanation.";
+
+    document.getElementById("coachAnswer").innerHTML = `
+      <div class="coach-response">
+        <div><b>Summary</b><p>${escapeHtml(summary)}</p></div>
+        <div><b>Question analysis</b><p>This looks like a ${topic.label.toLowerCase()} question. The main idea is to understand the concept before deciding what to buy.</p></div>
+        <div><b>Simple answer</b><p>${topic.answer}</p></div>
+        <div><b>Next thing to check</b><p>${topic.next}</p></div>
+        <div><span class="disclaimer">Educational purposes only.</span></div>
+      </div>
+    `;
+  }
+
+  document.getElementById("coachBtn").addEventListener("click", respond);
+  document.getElementById("coachQuestion").addEventListener("keydown", event => {
+    if (event.key === "Enter") respond();
   });
+}
+
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;"
+  }[character]));
 }
 
 function renderTopStocks() {
