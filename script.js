@@ -14,6 +14,8 @@ const quoteSnapshot = {
   }
 };
 
+const marketCapSnapshotLabel = "CompaniesMarketCap snapshot checked Jun 12, 2026";
+
 const assets = [
   ["NVDA", "Nvidia", "stock", 145.88, "Nvidia designs chips used for AI training, gaming, and data centers.", 82],
   ["MSFT", "Microsoft", "stock", 468.35, "Microsoft earns money from software, cloud computing, gaming, and AI tools.", 48],
@@ -64,6 +66,64 @@ const etfs = [
   ["SPY", "Low-Medium", "Microsoft, Apple, Nvidia, Berkshire", "Popular ETF that follows the S&P 500 index."],
   ["VTI", "Low-Medium", "Apple, Microsoft, Nvidia, thousands more", "Includes large, medium, and small US companies."]
 ];
+
+const lessonDetails = {
+  "Needs vs Wants": {
+    idea: "Needs are things you must pay for to live safely, like food, housing, basic clothes, transportation, and school supplies. Wants are extras that make life nicer, like games, snacks, subscriptions, and upgraded gadgets.",
+    details: ["Ask: would life become unsafe or impossible without this?", "Pay needs first, then savings, then wants.", "A want is not bad, but it should fit inside a plan."],
+    takeaway: "Smart spending is not about never having fun. It is about choosing fun after the important stuff is covered."
+  },
+  "Saving Money": {
+    idea: "Saving means keeping money for future goals instead of spending it right away. It gives you choices and keeps small problems from turning into emergencies.",
+    details: ["Start with a tiny automatic amount.", "Save before spending, not only whatever is left.", "Give savings a name, like phone fund, car fund, or college fund."],
+    takeaway: "The habit matters first. The amount can grow later."
+  },
+  "Emergency Funds": {
+    idea: "An emergency fund is money set aside for surprise problems, like a broken phone, car repair, medical cost, or lost income.",
+    details: ["Beginner target: $500 to $1,000.", "Long-term target: 3 to 6 months of expenses.", "Keep it in cash or savings, not risky investments."],
+    takeaway: "Emergency money protects your investing money from being sold at the wrong time."
+  },
+  "Avoiding Debt": {
+    idea: "Debt means borrowing money and paying it back later. Some debt can help, but high-interest debt can grow fast and trap your future income.",
+    details: ["Credit cards can charge very high interest.", "Only borrow when you understand the full cost.", "Pay bills on time to protect your credit history."],
+    takeaway: "If debt grows faster than your savings, it can cancel out your progress."
+  },
+  "Compound Growth": {
+    idea: "Compound growth happens when your gains start earning gains too. Time is the powerful ingredient.",
+    details: ["Invested money can grow on top of earlier growth.", "Starting younger gives compounding more years to work.", "Small regular investments can become meaningful over time."],
+    takeaway: "You do not need to be rich to start. You need time, consistency, and patience."
+  },
+  "What is a stock?": {
+    idea: "A stock is a small ownership piece of a company. If the company does well, the stock can rise. If the company struggles, the stock can fall.",
+    details: ["Stocks can move a lot in the short term.", "A stock price is not the same as business quality.", "Learn how the company makes money before buying."],
+    takeaway: "Buying a stock means betting on a business, not just a ticker symbol."
+  },
+  "What is an ETF?": {
+    idea: "An ETF is a basket of investments that trades under one ticker. One ETF can hold dozens, hundreds, or thousands of stocks.",
+    details: ["VOO and SPY track the S&P 500.", "VTI tracks a broader total US market basket.", "QQQ focuses more on large Nasdaq growth companies."],
+    takeaway: "ETFs are often easier for beginners because they spread risk across many companies."
+  },
+  "Why ETFs are safer": {
+    idea: "ETFs are usually safer than single stocks because one company cannot control the whole result as much.",
+    details: ["If one company falls, others may help balance it.", "Broad ETFs reduce company-specific risk.", "ETFs can still lose money when the market falls."],
+    takeaway: "Safer does not mean risk-free. It means less dependent on one company."
+  },
+  "Diversification": {
+    idea: "Diversification means spreading money across different companies, sectors, and investment types.",
+    details: ["Do not put everything into one stock.", "Mixing ETFs and stocks can reduce concentration risk.", "Too many similar tech stocks may not be truly diversified."],
+    takeaway: "A diversified portfolio is built to survive surprises."
+  },
+  "Risk vs Reward": {
+    idea: "Risk is the chance things go badly. Reward is the possible gain you hope to earn for taking that risk.",
+    details: ["Higher potential return usually means higher risk.", "A popular stock can still be risky.", "Your time horizon changes how much risk makes sense."],
+    takeaway: "Good investors ask what can go wrong before thinking about what can go right."
+  },
+  "Market Indexes": {
+    idea: "A market index tracks a group of stocks to show how part of the market is doing.",
+    details: ["The S&P 500 tracks about 500 large US companies.", "The Nasdaq-100 is more growth and technology heavy.", "Indexes make it easier to compare your portfolio."],
+    takeaway: "Indexes are like scoreboards for different parts of the stock market."
+  }
+};
 
 const platforms = [
   {
@@ -236,16 +296,17 @@ const topStocks = Array.from(
 ).map((stock, index) => ({ ...stock, rank: index + 1 }));
 
 const marketCapLeaders = [
-  { rank: 1, symbol: "NVDA", marketCap: "$5T area", note: "AI chip leader and current mega-cap heavyweight" },
-  { rank: 2, symbol: "GOOGL", marketCap: "$3T+ area", note: "Google Search, YouTube, cloud, and AI" },
-  { rank: 3, symbol: "AAPL", marketCap: "$3T+ area", note: "iPhone ecosystem, services, and consumer hardware" },
-  { rank: 4, symbol: "MSFT", marketCap: "$3T+ area", note: "Azure, Office, Windows, gaming, and AI software" },
-  { rank: 5, symbol: "AMZN", marketCap: "$2T+ area", note: "E-commerce, AWS cloud, ads, and logistics" },
-  { rank: 6, symbol: "AVGO", marketCap: "$1T+ area", note: "AI networking chips and infrastructure software" },
-  { rank: 7, symbol: "META", marketCap: "$1T+ area", note: "Facebook, Instagram, WhatsApp, ads, and AI" },
-  { rank: 8, symbol: "TSLA", marketCap: "$1T+ area", note: "Electric vehicles, energy, autonomy, and robotics" },
-  { rank: 9, symbol: "BRK.B", marketCap: "$1T area", note: "Berkshire's insurance, rail, energy, and investment portfolio" },
-  { rank: 10, symbol: "LLY", marketCap: "$1T area", note: "Medicines for diabetes, obesity, cancer, and immunology" }
+  { rank: 1, symbol: "NVDA", marketCap: "$4.962T", sourcePrice: "$204.87", note: "AI chip leader and current largest US public company by market cap" },
+  { rank: 2, symbol: "GOOGL", marketCap: "$4.348T", sourcePrice: "$356.56", note: "Google Search, YouTube, cloud, ads, Android, and AI" },
+  { rank: 3, symbol: "AAPL", marketCap: "$4.342T", sourcePrice: "$295.63", note: "iPhone ecosystem, services, and consumer hardware" },
+  { rank: 4, symbol: "MSFT", marketCap: "$2.899T", sourcePrice: "$390.34", note: "Azure, Office, Windows, gaming, and AI software" },
+  { rank: 5, symbol: "AMZN", marketCap: "$2.597T", sourcePrice: "$241.51", note: "E-commerce, AWS cloud, ads, streaming, and logistics" },
+  { rank: 6, symbol: "AVGO", marketCap: "$1.834T", sourcePrice: "$385.57", note: "AI networking chips and infrastructure software" },
+  { rank: 7, symbol: "TSLA", marketCap: "$1.499T", sourcePrice: "$399.15", note: "Electric vehicles, energy, autonomy, and robotics" },
+  { rank: 8, symbol: "META", marketCap: "$1.442T", sourcePrice: "$568.43", note: "Facebook, Instagram, WhatsApp, ads, and AI" },
+  { rank: 9, symbol: "MU", marketCap: "$1.123T", sourcePrice: "$995.87", note: "Memory chips used in AI servers, data centers, phones, and PCs" },
+  { rank: 10, symbol: "BRK.B", marketCap: "$1.047T", sourcePrice: "$485.79", note: "Insurance, rail, energy, and a major investment portfolio" },
+  { rank: 11, symbol: "LLY", marketCap: "$1.035T", sourcePrice: "$1,161", note: "Medicines for diabetes, obesity, cancer, and immunology" }
 ];
 
 const marketCapRanks = Object.fromEntries(marketCapLeaders.map(item => [item.symbol, item]));
@@ -714,15 +775,34 @@ function setupCoach() {
       words: ["compound", "interest", "growth"],
       label: "Compound growth",
       answer: "Compound growth means your gains can start earning gains too. The longer money stays invested, the more time it has to build on itself.",
-      next: "Try increasing savings or investing in the budget simulator and watch how net worth growth changes."
+      next: "Try increasing savings or investing in the budget simulator and watch how net worth growth changes.",
+      plan: ["Start with a small monthly amount.", "Keep the money invested for years, not days.", "Use broad ETFs as the simple example."]
     },
     risk: {
       words: ["risk", "safe", "reward", "lose money"],
       label: "Risk and reward",
       answer: "Risk is the chance an investment loses value or does worse than expected. Reward is the possible gain you hope to earn for taking that risk.",
-      next: "Use ETFs for a steadier beginner example, then compare them with a high-growth single stock."
+      next: "Use ETFs for a steadier beginner example, then compare them with a high-growth single stock.",
+      plan: ["Avoid putting everything in one stock.", "Compare risk score before buying.", "Keep emergency money out of the market."]
+    },
+    budget: {
+      words: ["budget", "saving", "salary", "spending", "rent", "food", "emergency"],
+      label: "Budget planning",
+      answer: "A budget is a plan for where money goes before it disappears. A strong beginner budget covers needs first, saves money, invests only after basics are handled, and leaves some room for fun.",
+      next: "Use the Budget tab and try to keep savings plus investing near 20% or more if the numbers fit.",
+      plan: ["Pay needs first: rent, food, transportation.", "Build a $500-$1,000 starter emergency fund.", "Keep entertainment controlled, but not zero."]
+    },
+    portfolio: {
+      words: ["portfolio", "diversified", "allocation", "holdings", "investing plan"],
+      label: "Portfolio planning",
+      answer: "A beginner portfolio should avoid depending on one company. Broad ETFs can be the foundation, while individual stocks can be smaller learning positions.",
+      next: "In the Simulator tab, compare a one-stock portfolio with a portfolio built around ETFs like VOO, VTI, or QQQ.",
+      plan: ["Use ETFs as the core of the portfolio.", "Keep single stocks smaller than the ETF section.", "Check sector exposure so everything is not just tech."]
     }
   };
+  Object.values(topics).forEach(topic => {
+    topic.plan ||= ["Learn the idea first.", "Practice in the simulator.", "Keep decisions simple and diversified."];
+  });
 
   function respond() {
     const rawQuestion = document.getElementById("coachQuestion").value.trim();
@@ -734,9 +814,14 @@ function setupCoach() {
 
     document.getElementById("coachAnswer").innerHTML = `
       <div class="coach-response">
+        <div class="coach-agent-head">
+          <span class="coach-avatar">AI</span>
+          <div><h4>FinCoach</h4><p>I read your question and turned it into a simple learning plan.</p></div>
+        </div>
         <div><b>Summary</b><p>${escapeHtml(summary)}</p></div>
         <div><b>Question analysis</b><p>This looks like a ${topic.label.toLowerCase()} question. The main idea is to understand the concept before deciding what to buy.</p></div>
         <div><b>Simple answer</b><p>${topic.answer}</p></div>
+        <div><b>Ideas and plan</b><div class="coach-plan">${topic.plan.map(step => `<span>${step}</span>`).join("")}</div></div>
         <div><b>Next thing to check</b><p>${topic.next}</p></div>
         <div><span class="disclaimer">Educational purposes only.</span></div>
       </div>
@@ -839,6 +924,52 @@ function renderPlatforms() {
   `).join("");
 }
 
+function setupLessons() {
+  document.querySelectorAll("#learn li").forEach(item => {
+    const title = item.textContent.trim();
+    item.setAttribute("role", "button");
+    item.setAttribute("tabindex", "0");
+    item.setAttribute("aria-label", `Open lesson: ${title}`);
+    item.addEventListener("click", () => openLessonDetail(title));
+    item.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLessonDetail(title);
+      }
+    });
+  });
+}
+
+function openLessonDetail(title) {
+  const lesson = lessonDetails[title] || defaultLessonDetail(title);
+  document.getElementById("stockDetail").innerHTML = `
+    <div class="detail-hero">
+      <div class="logo-wrap"><span class="logo-fallback" style="display:block">LE</span></div>
+      <div>
+        <h3>${title}</h3>
+        <p>Beginner lesson • Investopedia</p>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-box"><b>Main idea</b><p>${lesson.idea}</p></div>
+      <div class="detail-box"><b>Key details</b><p>${lesson.details.map(detail => `• ${detail}`).join("<br>")}</p></div>
+      <div class="detail-box"><b>Beginner takeaway</b><p>${lesson.takeaway}</p></div>
+      <div class="detail-box"><b>Try it in the app</b><p>Use the budget simulator or investing simulator to practice this idea without using real money.</p></div>
+    </div>
+  `;
+  const modal = document.getElementById("stockModal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function defaultLessonDetail(title) {
+  return {
+    idea: `${title} is an important beginner investing topic. The goal is to understand the business or concept before making decisions.`,
+    details: ["Learn what the term means.", "Look at examples in the simulator.", "Compare risk, reward, and time horizon."],
+    takeaway: "Simple understanding beats guessing."
+  };
+}
+
 function platformLogoUrl(slug) {
   return platformLogoSources(slug)[0];
 }
@@ -894,7 +1025,8 @@ function renderMarketCapLeaders() {
         <span class="leader-rank">Market cap #${leader.rank}</span>
         <h4>${leader.symbol} · ${name}</h4>
         ${quote ? `<div class="leader-price"><b>${moneyExact(quote.current)}</b><span>${change >= 0 ? "+" : ""}${(change * 100).toFixed(2)}%</span></div>` : ""}
-        <p>${leader.marketCap} · ${sector}</p>
+        <p>${leader.marketCap} market cap · ${sector}</p>
+        <p>Source price: ${leader.sourcePrice} · ${marketCapSnapshotLabel}</p>
         <p>${leader.note}</p>
       </article>
     `;
@@ -952,7 +1084,7 @@ function openStockDetail(symbol) {
       <div class="detail-box"><b>Why investors watch it</b><p>${why}</p></div>
       <div class="detail-box"><b>Main risks</b><p>${risks}</p></div>
       ${quoteBox}
-      <div class="detail-box"><b>Beginner takeaway</b><p>${capLeader ? `Market cap rank #${capLeader.rank}: ${capLeader.note}. ` : ""}${stockLens(stock)}. Learn what drives the business before comparing price, growth, debt, valuation, and analyst expectations.</p></div>
+      <div class="detail-box"><b>Beginner takeaway</b><p>${capLeader ? `Market cap rank #${capLeader.rank}: ${capLeader.marketCap} market cap in the ${marketCapSnapshotLabel}. ${capLeader.note}. ` : ""}${stockLens(stock)}. Learn what drives the business before comparing price, growth, debt, valuation, and analyst expectations.</p></div>
     </div>
     <div class="detail-links">
       <a href="${nasdaqUrl(stock.symbol)}" target="_blank" rel="noreferrer">Analyst research</a>
@@ -1052,6 +1184,7 @@ document.getElementById("themeBtn").addEventListener("click", () => {
 
 setupTabs();
 renderCards();
+setupLessons();
 renderSimulator();
 renderBudget();
 setupCoach();
