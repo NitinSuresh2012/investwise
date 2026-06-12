@@ -200,6 +200,10 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .stock-tile p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
 .stock-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .stock-meta span { border-radius: 999px; background: var(--panel-2); color: var(--muted); padding: 5px 8px; font-size: 11px; font-weight: 900; }
+.valuation-badge { display: inline-flex; margin-top: 9px; border-radius: 999px; padding: 6px 9px; font-size: 12px; font-weight: 1000; }
+.valuation-badge.undervalued { background: rgba(57,229,140,.14); color: var(--mint); }
+.valuation-badge.fair { background: rgba(155,220,255,.14); color: var(--sky); }
+.valuation-badge.overvalued { background: rgba(251,113,133,.14); color: var(--coral); }
 .stock-links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
 .stock-links a { color: var(--text); background: var(--panel-2); border-radius: 999px; padding: 6px 9px; text-decoration: none; font-size: 12px; font-weight: 1000; }
 .modal { position: fixed; inset: 0; z-index: 50; display: none; place-items: center; padding: 18px; }

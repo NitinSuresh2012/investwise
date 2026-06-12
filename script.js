@@ -311,6 +311,20 @@ const marketCapLeaders = [
 
 const marketCapRanks = Object.fromEntries(marketCapLeaders.map(item => [item.symbol, item]));
 
+const valuationOverrides = {
+  NVDA: ["overvalued", "Very strong AI growth, but expectations are extremely high after a huge market-cap run."],
+  GOOGL: ["fair", "Strong profits and AI/search leadership, with regulatory risk and high expectations."],
+  AAPL: ["fair", "Premium brand and cash flow, but growth must justify the large valuation."],
+  MSFT: ["fair", "Durable software/cloud business, but AI spending and valuation are important to watch."],
+  AMZN: ["fair", "AWS and ads support growth, while retail margins and valuation still matter."],
+  AVGO: ["fair", "AI infrastructure exposure is strong, but chip cycles and acquisition risk matter."],
+  TSLA: ["overvalued", "Investors price in future autonomy and growth, making expectations demanding."],
+  META: ["fair", "Large cash-generating ads business, but platform and AI spending risks remain."],
+  MU: ["overvalued", "Memory demand can be strong, but memory stocks are cyclical and can swing sharply."],
+  "BRK.B": ["undervalued", "Diversified businesses and cash-heavy balance sheet can look steadier than high-growth tech."],
+  LLY: ["overvalued", "Major medicine growth is exciting, but the valuation depends on continued execution."]
+};
+
 const logoDomains = {
   AAPL: "apple.com",
   ABBV: "abbvie.com",
@@ -872,6 +886,7 @@ function renderTopStocks() {
         <div class="symbol">${stock.symbol}</div>
         <h4>${stock.name}</h4>
         <p>${stock.sector}</p>
+        <span class="valuation-badge ${valuationLens(stock).status}">${valuationLens(stock).label}</span>
         <div class="stock-meta">
           <span>${stockLens(stock)}</span>
           <span>${stock.sector.includes("Technology") ? "Growth watch" : "Quality watch"}</span>
@@ -1064,6 +1079,7 @@ function openStockDetail(symbol) {
   if (!stock) return;
   const [does, why, risks] = companyDetails[symbol] || defaultDetail(stock);
   const capLeader = marketCapRanks[symbol];
+  const valuation = valuationLens(stock);
   const quote = quoteSnapshot.prices[symbol];
   const quoteBox = quote
     ? `<div class="detail-box"><b>Current price snapshot</b><p>${moneyExact(quote.current)} ${quote.label}, updated ${quoteSnapshot.updatedLabel}. Official close: ${moneyExact(quote.close)} on ${quoteSnapshot.officialCloseDate}.</p></div>`
@@ -1083,6 +1099,7 @@ function openStockDetail(symbol) {
       <div class="detail-box"><b>What it does</b><p>${does}</p></div>
       <div class="detail-box"><b>Why investors watch it</b><p>${why}</p></div>
       <div class="detail-box"><b>Main risks</b><p>${risks}</p></div>
+      <div class="detail-box"><b>Valuation lens</b><p>${valuation.label}: ${valuation.reason} This is a learning signal, not a buy/sell rating.</p></div>
       ${quoteBox}
       <div class="detail-box"><b>Beginner takeaway</b><p>${capLeader ? `Market cap rank #${capLeader.rank}: ${capLeader.marketCap} market cap in the ${marketCapSnapshotLabel}. ${capLeader.note}. ` : ""}${stockLens(stock)}. Learn what drives the business before comparing price, growth, debt, valuation, and analyst expectations.</p></div>
     </div>
@@ -1094,6 +1111,46 @@ function openStockDetail(symbol) {
   const modal = document.getElementById("stockModal");
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
+}
+
+function valuationLens(stock) {
+  const override = valuationOverrides[stock.symbol];
+  if (override) {
+    return {
+      status: override[0],
+      label: labelForValuation(override[0]),
+      reason: override[1]
+    };
+  }
+
+  const sector = stock.sector;
+  if (["Energy", "Financials", "Consumer Staples", "Utilities"].includes(sector)) {
+    return {
+      status: "undervalued",
+      label: "Potentially undervalued",
+      reason: "This sector often trades on cash flow, dividends, or steadier earnings instead of high growth hype."
+    };
+  }
+  if (["Information Technology", "Consumer Discretionary", "Communication Services"].includes(sector)) {
+    return {
+      status: "overvalued",
+      label: "Potentially overvalued",
+      reason: "Growth sectors can become expensive when investors expect fast future earnings."
+    };
+  }
+  return {
+    status: "fair",
+    label: "Fair/watchlist",
+    reason: "The business should be compared with earnings growth, debt, margins, competition, and analyst expectations."
+  };
+}
+
+function labelForValuation(status) {
+  return {
+    undervalued: "Potentially undervalued",
+    fair: "Fair/watchlist",
+    overvalued: "Potentially overvalued"
+  }[status] || "Fair/watchlist";
 }
 
 function defaultDetail(stock) {
