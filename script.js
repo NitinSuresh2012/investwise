@@ -1,4 +1,4 @@
-const quoteSnapshot = {
+let quoteSnapshot = {
   updatedLabel: "Jun 11, 2026 11:39 PM ET",
   officialCloseDate: "Jun 11, 2026",
   prices: {
@@ -14,7 +14,7 @@ const quoteSnapshot = {
   }
 };
 
-const marketCapSnapshotLabel = "CompaniesMarketCap snapshot checked Jun 12, 2026";
+let marketCapSnapshotLabel = "CompaniesMarketCap snapshot checked Jun 12, 2026";
 
 const assets = [
   ["NVDA", "Nvidia", "stock", 145.88, "Nvidia designs chips used for AI training, gaming, and data centers.", 82],
@@ -295,7 +295,7 @@ const topStocks = Array.from(
   new Map(rawTopStocks.map(([symbol, name, sector]) => [symbol, { symbol, name, sector }])).values()
 ).map((stock, index) => ({ ...stock, rank: index + 1 }));
 
-const marketCapLeaders = [
+let marketCapLeaders = [
   { rank: 1, symbol: "NVDA", marketCap: "$4.962T", sourcePrice: "$204.87", note: "AI chip leader and current largest US public company by market cap" },
   { rank: 2, symbol: "GOOGL", marketCap: "$4.348T", sourcePrice: "$356.56", note: "Google Search, YouTube, cloud, ads, Android, and AI" },
   { rank: 3, symbol: "AAPL", marketCap: "$4.342T", sourcePrice: "$295.63", note: "iPhone ecosystem, services, and consumer hardware" },
@@ -309,9 +309,9 @@ const marketCapLeaders = [
   { rank: 11, symbol: "LLY", marketCap: "$1.035T", sourcePrice: "$1,161", note: "Medicines for diabetes, obesity, cancer, and immunology" }
 ];
 
-const marketCapRanks = Object.fromEntries(marketCapLeaders.map(item => [item.symbol, item]));
+let marketCapRanks = Object.fromEntries(marketCapLeaders.map(item => [item.symbol, item]));
 
-const valuationOverrides = {
+let valuationOverrides = {
   NVDA: ["overvalued", "Very strong AI growth, but expectations are extremely high after a huge market-cap run."],
   GOOGL: ["fair", "Strong profits and AI/search leadership, with regulatory risk and high expectations."],
   AAPL: ["fair", "Premium brand and cash flow, but growth must justify the large valuation."],
@@ -1165,6 +1165,44 @@ function labelForValuation(status) {
   }[status] || "Fair";
 }
 
+async function hydrateMarketData() {
+  try {
+    const response = await fetch(`market-data.json?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) return;
+    const data = await response.json();
+    applyMarketData(data);
+    if (document.querySelector(".top-stock-grid")) renderTopStocks();
+    if (document.querySelector("#selectedAsset")) selectSimAsset(selectedSimSymbol);
+  } catch {
+    // Static fallback data keeps the presentation working if the scheduled update is unavailable.
+  }
+}
+
+function applyMarketData(data) {
+  if (data.updatedLabel) quoteSnapshot.updatedLabel = data.updatedLabel;
+  if (data.officialCloseDate) quoteSnapshot.officialCloseDate = data.officialCloseDate;
+  if (data.marketCapSnapshotLabel) marketCapSnapshotLabel = data.marketCapSnapshotLabel;
+  if (data.prices) {
+    quoteSnapshot.prices = { ...quoteSnapshot.prices, ...data.prices };
+    Object.entries(data.prices).forEach(([symbol, priceData]) => {
+      const asset = assets.find(item => item.symbol === symbol);
+      if (asset && Number.isFinite(priceData.current)) asset.price = priceData.current;
+    });
+  }
+  if (Array.isArray(data.marketCapLeaders) && data.marketCapLeaders.length) {
+    marketCapLeaders = data.marketCapLeaders;
+    marketCapRanks = Object.fromEntries(marketCapLeaders.map(item => [item.symbol, item]));
+  }
+  if (data.valuationOverrides) {
+    valuationOverrides = Object.fromEntries(
+      Object.entries(data.valuationOverrides).map(([symbol, item]) => [
+        symbol,
+        [item.status || "fair", item.reason || "Updated valuation signal from the latest data snapshot."]
+      ])
+    );
+  }
+}
+
 function defaultDetail(stock) {
   const sector = stock.sector;
   const doesBySector = {
@@ -1259,3 +1297,4 @@ renderBudget();
 setupCoach();
 renderTopStocks();
 renderPlatforms();
+hydrateMarketData();

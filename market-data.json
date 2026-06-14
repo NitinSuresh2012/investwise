@@ -1,0 +1,42 @@
+{
+  "updatedLabel": "Jun 11, 2026 11:39 PM ET",
+  "officialCloseDate": "Jun 11, 2026",
+  "marketCapSnapshotLabel": "Static fallback snapshot checked Jun 12, 2026",
+  "prices": {
+    "NVDA": { "current": 205.62, "close": 204.87, "label": "extended-hours" },
+    "GOOGL": { "current": 360.93, "close": 357.77, "label": "extended-hours" },
+    "AAPL": { "current": 295.53, "close": 295.63, "label": "extended-hours" },
+    "MSFT": { "current": 392.69, "close": 390.34, "label": "extended-hours" },
+    "AMZN": { "current": 241.93, "close": 241.51, "label": "extended-hours" },
+    "AVGO": { "current": 386.81, "close": 385.57, "label": "extended-hours" },
+    "META": { "current": 572.31, "close": 568.43, "label": "extended-hours" },
+    "TSLA": { "current": 399.23, "close": 399.15, "label": "extended-hours" },
+    "LLY": { "current": 1161.42, "close": 1160.95, "label": "extended-hours" }
+  },
+  "marketCapLeaders": [
+    { "rank": 1, "symbol": "NVDA", "marketCap": "$4.962T", "sourcePrice": "$204.87", "note": "AI chip leader and current largest US public company by market cap" },
+    { "rank": 2, "symbol": "GOOGL", "marketCap": "$4.348T", "sourcePrice": "$356.56", "note": "Google Search, YouTube, cloud, ads, Android, and AI" },
+    { "rank": 3, "symbol": "AAPL", "marketCap": "$4.342T", "sourcePrice": "$295.63", "note": "iPhone ecosystem, services, and consumer hardware" },
+    { "rank": 4, "symbol": "MSFT", "marketCap": "$2.899T", "sourcePrice": "$390.34", "note": "Azure, Office, Windows, gaming, and AI software" },
+    { "rank": 5, "symbol": "AMZN", "marketCap": "$2.597T", "sourcePrice": "$241.51", "note": "E-commerce, AWS cloud, ads, streaming, and logistics" },
+    { "rank": 6, "symbol": "AVGO", "marketCap": "$1.834T", "sourcePrice": "$385.57", "note": "AI networking chips and infrastructure software" },
+    { "rank": 7, "symbol": "TSLA", "marketCap": "$1.499T", "sourcePrice": "$399.15", "note": "Electric vehicles, energy, autonomy, and robotics" },
+    { "rank": 8, "symbol": "META", "marketCap": "$1.442T", "sourcePrice": "$568.43", "note": "Facebook, Instagram, WhatsApp, ads, and AI" },
+    { "rank": 9, "symbol": "MU", "marketCap": "$1.123T", "sourcePrice": "$995.87", "note": "Memory chips used in AI servers, data centers, phones, and PCs" },
+    { "rank": 10, "symbol": "BRK.B", "marketCap": "$1.047T", "sourcePrice": "$485.79", "note": "Insurance, rail, energy, and a major investment portfolio" },
+    { "rank": 11, "symbol": "LLY", "marketCap": "$1.035T", "sourcePrice": "$1,161", "note": "Medicines for diabetes, obesity, cancer, and immunology" }
+  ],
+  "valuationOverrides": {
+    "NVDA": { "status": "overvalued", "reason": "Very strong AI growth, but expectations are extremely high after a huge market-cap run." },
+    "GOOGL": { "status": "fair", "reason": "Strong profits and AI/search leadership, with regulatory risk and high expectations." },
+    "AAPL": { "status": "fair", "reason": "Premium brand and cash flow, but growth must justify the large valuation." },
+    "MSFT": { "status": "fair", "reason": "Durable software/cloud business, but AI spending and valuation are important to watch." },
+    "AMZN": { "status": "fair", "reason": "AWS and ads support growth, while retail margins and valuation still matter." },
+    "AVGO": { "status": "fair", "reason": "AI infrastructure exposure is strong, but chip cycles and acquisition risk matter." },
+    "TSLA": { "status": "overvalued", "reason": "Investors price in future autonomy and growth, making expectations demanding." },
+    "META": { "status": "fair", "reason": "Large cash-generating ads business, but platform and AI spending risks remain." },
+    "MU": { "status": "overvalued", "reason": "Memory demand can be strong, but memory stocks are cyclical and can swing sharply." },
+    "BRK.B": { "status": "undervalued", "reason": "Diversified businesses and cash-heavy balance sheet can look steadier than high-growth tech." },
+    "LLY": { "status": "overvalued", "reason": "Major medicine growth is exciting, but the valuation depends on continued execution." }
+  }
+}
