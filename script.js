@@ -437,6 +437,7 @@ const simpleIconSlugs = {
   AMAT: "appliedmaterials",
   AMD: "amd",
   AMGN: "amgen",
+  AMT: "americantower",
   AMZN: "amazon",
   AVGO: "broadcom",
   AXP: "americanexpress",
@@ -446,6 +447,7 @@ const simpleIconSlugs = {
   BLK: "blackrock",
   BMY: "bristolmyerssquibb",
   BNY: "bny",
+  "BRK.B": "berkshirehathaway",
   C: "citigroup",
   CAT: "caterpillar",
   CL: "colgate",
@@ -458,10 +460,12 @@ const simpleIconSlugs = {
   CVS: "cvshealth",
   CVX: "chevron",
   DE: "johndeere",
+  DHR: "danaher",
   DIS: "disney",
   DUK: "dukeenergy",
   EMR: "emerson",
   FDX: "fedex",
+  GD: "generaldynamics",
   GE: "generalelectric",
   GEV: "gevernova",
   GILD: "gileadsciences",
@@ -473,6 +477,7 @@ const simpleIconSlugs = {
   IBM: "ibm",
   INTC: "intel",
   INTU: "intuit",
+  ISRG: "intuitivesurgical",
   JNJ: "johnsonandjohnson",
   JPM: "jpmorgan",
   KO: "cocacola",
@@ -480,16 +485,19 @@ const simpleIconSlugs = {
   LLY: "eli-lilly",
   LMT: "lockheedmartin",
   LOW: "lowes",
+  LRCX: "lamresearch",
   MA: "mastercard",
   MCD: "mcdonalds",
   MDLZ: "mondelez",
   MDT: "medtronic",
   META: "meta",
   MMM: "3m",
+  MO: "altria",
   MRK: "merck",
   MS: "morganstanley",
   MSFT: "microsoft",
   MU: "microntechnology",
+  NEE: "nexteraenergy",
   NFLX: "netflix",
   NKE: "nike",
   NOW: "servicenow",
@@ -507,6 +515,7 @@ const simpleIconSlugs = {
   SO: "southerncompany",
   SPG: "simon",
   T: "atandt",
+  TMO: "thermofisherscientific",
   TMUS: "tmobile",
   TSLA: "tesla",
   TXN: "texasinstruments",
@@ -538,6 +547,7 @@ const logoBrandColors = {
   CSCO: "1BA0D7",
   INTC: "0071C5",
   IBM: "052FAD",
+  ISRG: "00A3E0",
   ORCL: "F80000",
   QCOM: "3253DC",
   TXN: "CC0000",
@@ -560,6 +570,7 @@ const logoBrandColors = {
   WMT: "0071CE",
   COST: "E31837",
   HD: "F96302",
+  DHR: "005EB8",
   LOW: "004990",
   MCD: "FFC72C",
   SBUX: "00754A",
@@ -1057,16 +1068,16 @@ function defaultLessonDetail(title) {
 
 function platformLogoMarkup(platform) {
   if (platform.logo === "fidelity") {
-    return `<div class="platform-logo built-in" aria-label="Fidelity Youth logo"><div class="brand-mark fidelity"><i>F</i><strong>Fidelity<br>Youth</strong></div></div>`;
+    return `<div class="platform-logo built-in" aria-label="Fidelity Youth logo"><div class="platform-wordmark fidelity"><i class="mark"></i><strong>Fidelity<small>Youth</small></strong></div></div>`;
   }
   if (platform.logo === "greenlight") {
-    return `<div class="platform-logo built-in" aria-label="Greenlight logo"><div class="brand-mark greenlight"><i>G</i><strong>Greenlight</strong></div></div>`;
+    return `<div class="platform-logo built-in" aria-label="Greenlight logo"><div class="platform-wordmark greenlight"><i class="mark"></i><strong>Greenlight<small>Investing</small></strong></div></div>`;
   }
   if (platform.logo === "robinhood") {
-    return `<div class="platform-logo built-in" aria-label="Robinhood logo"><div class="brand-mark robinhood"><i>R</i><strong>Robinhood</strong></div></div>`;
+    return `<div class="platform-logo built-in" aria-label="Robinhood logo"><div class="platform-wordmark robinhood"><i class="mark"></i><strong>Robinhood<small>Learn</small></strong></div></div>`;
   }
   if (platform.logo === "schwab") {
-    return `<div class="platform-logo built-in" aria-label="Schwab Teen Investor logo"><div class="brand-mark schwab"><i>S</i><strong>Schwab<br>Teen</strong></div></div>`;
+    return `<div class="platform-logo built-in" aria-label="Schwab Teen Investor logo"><div class="platform-wordmark schwab"><i class="mark">S</i><strong>Schwab<small>Teen</small></strong></div></div>`;
   }
   return `<div class="platform-logo built-in"><div class="brand-mark"><i>${platform.name[0]}</i><strong>${platform.name}</strong></div></div>`;
 }
@@ -1291,6 +1302,8 @@ function logoUrl(symbol) {
 }
 
 function companyLogoMarkup(symbol, name) {
+  const special = specialCompanyLogoMarkup(symbol, name);
+  if (special) return special;
   const source = logoUrl(symbol);
   const safeSymbol = symbol.replace(".B", "").slice(0, 5);
   if (!source) {
@@ -1302,6 +1315,26 @@ function companyLogoMarkup(symbol, name) {
       <span class="logo-fallback">${safeSymbol}</span>
     </div>
   `;
+}
+
+function specialCompanyLogoMarkup(symbol, name) {
+  const safeSymbol = symbol.replace(".B", "").slice(0, 5);
+  const map = {
+    MSFT: `<div class="full-logo msft"><span></span><span></span><span></span><span></span></div>`,
+    GOOGL: `<div class="full-logo googl"><span>G</span></div>`,
+    AMZN: `<div class="full-logo amzn"><span>amazon</span></div>`,
+    NVDA: `<div class="full-logo nvda"><span>NVIDIA</span></div>`,
+    META: `<div class="full-logo meta"><span>∞</span></div>`,
+    TSLA: `<div class="full-logo tsla"><span>T</span></div>`,
+    MA: `<div class="full-logo mastercard"></div>`,
+    V: `<div class="full-logo visa"><span>VISA</span></div>`,
+    WMT: `<div class="full-logo wmt"><span>Walmart</span></div>`,
+    JPM: `<div class="full-logo jpm"><span>JPM</span></div>`,
+    KO: `<div class="full-logo ko"><span>Coca-Cola</span></div>`,
+    PEP: `<div class="full-logo pep"><span>pepsi</span></div>`
+  };
+  if (!map[symbol]) return "";
+  return `<div class="logo-wrap full-brand" title="${name} logo">${map[symbol]}<span class="logo-fallback">${safeSymbol}</span></div>`;
 }
 
 function logoSources(symbol) {

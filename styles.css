@@ -171,6 +171,20 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .brand-mark.robinhood strong { color: #00a805; font-size: 15px; }
 .brand-mark.schwab i { background: #0073cf; color: #fff; font-weight: 1000; }
 .brand-mark.schwab strong { color: #0067b8; font-size: 13px; }
+.platform-wordmark { display: flex; align-items: center; gap: 9px; color: #0f172a; line-height: 1; }
+.platform-wordmark .mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; font-weight: 1000; }
+.platform-wordmark strong { display: block; font-size: 15px; letter-spacing: 0; }
+.platform-wordmark small { display: block; margin-top: 2px; font-size: 10px; font-weight: 1000; letter-spacing: .08em; text-transform: uppercase; }
+.platform-wordmark.fidelity .mark { background: #0a7f3f; }
+.platform-wordmark.fidelity .mark:before { content: ""; width: 18px; height: 18px; background: #fff; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.platform-wordmark.fidelity strong, .platform-wordmark.fidelity small { color: #0a7f3f; }
+.platform-wordmark.greenlight .mark { background: radial-gradient(circle, #dfff4f 0 34%, #00c853 36% 100%); box-shadow: inset 0 0 0 2px #00a846; }
+.platform-wordmark.greenlight strong, .platform-wordmark.greenlight small { color: #00a846; }
+.platform-wordmark.robinhood .mark { background: #00c805; }
+.platform-wordmark.robinhood .mark:before { content: ""; width: 19px; height: 19px; background: #062d16; clip-path: polygon(0 35%, 70% 0, 100% 26%, 43% 100%, 18% 80%, 55% 32%, 11% 55%); }
+.platform-wordmark.robinhood strong, .platform-wordmark.robinhood small { color: #00a805; }
+.platform-wordmark.schwab .mark { background: #0073cf; color: #fff; }
+.platform-wordmark.schwab strong, .platform-wordmark.schwab small { color: #0067b8; }
 .platform-card h4 { margin: 0; font-size: 22px; }
 .platform-card .tag { border-radius: 999px; background: rgba(57,229,140,.13); color: var(--mint); padding: 6px 9px; font-size: 12px; font-weight: 1000; }
 .platform-card p { color: var(--muted); line-height: 1.55; margin: 10px 0 0; }
@@ -213,6 +227,33 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .logo-fallback.visible { display: block; }
 .logo-wrap.ticker-logo { background: linear-gradient(145deg, #ffffff, #e8fff3); border-color: rgba(57,229,140,.35); }
 .logo-wrap.ticker-logo .logo-fallback { color: #07100c; font-size: 12px; letter-spacing: 0; }
+.logo-wrap.full-brand { padding: 5px; }
+.full-logo { display: grid; place-items: center; width: 100%; height: 100%; color: #111827; font-weight: 1000; line-height: 1; }
+.full-logo span { display: block; }
+.full-logo.msft { grid-template-columns: repeat(2, 1fr); gap: 3px; padding: 5px; }
+.full-logo.msft span:nth-child(1) { background: #f25022; }
+.full-logo.msft span:nth-child(2) { background: #7fba00; }
+.full-logo.msft span:nth-child(3) { background: #00a4ef; }
+.full-logo.msft span:nth-child(4) { background: #ffb900; }
+.full-logo.msft span { width: 100%; height: 100%; }
+.full-logo.googl { font-size: 28px; color: #4285f4; font-family: Arial, sans-serif; }
+.full-logo.googl span { background: linear-gradient(90deg, #4285f4, #34a853, #fbbc05, #ea4335); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.full-logo.amzn { font-size: 10px; color: #111827; position: relative; }
+.full-logo.amzn span:after { content: ""; display: block; width: 30px; height: 9px; border-bottom: 3px solid #ff9900; border-radius: 0 0 50% 50%; margin: 1px auto 0; transform: rotate(-8deg); }
+.full-logo.nvda { background: #76b900; color: #fff; border-radius: 11px; font-size: 9px; letter-spacing: .04em; }
+.full-logo.meta { color: #0866ff; font-size: 25px; }
+.full-logo.tsla { color: #e82127; font-size: 25px; }
+.full-logo.mastercard { position: relative; }
+.full-logo.mastercard:before, .full-logo.mastercard:after { content: ""; position: absolute; width: 23px; height: 23px; border-radius: 50%; top: 8px; }
+.full-logo.mastercard:before { left: 7px; background: #eb001b; }
+.full-logo.mastercard:after { right: 7px; background: rgba(247,158,27,.88); }
+.full-logo.visa { color: #1434cb; font-size: 16px; font-style: italic; }
+.full-logo.wmt { color: #0071ce; font-size: 9px; }
+.full-logo.wmt:after { content: "✹"; color: #ffc220; font-size: 20px; line-height: 1; }
+.full-logo.jpm { background: #005eb8; color: #fff; border-radius: 11px; font-size: 10px; }
+.full-logo.ko { color: #d00013; font-family: Georgia, serif; font-size: 12px; font-style: italic; }
+.full-logo.pep { color: #2151a1; font-size: 10px; }
+.full-logo.pep:before { content: ""; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(#e32934 0 38%, #fff 39% 61%, #005cb4 62% 100%); margin-bottom: 1px; }
 .stock-tile .rank { color: var(--muted); font-size: 12px; font-weight: 1000; letter-spacing: .12em; }
 .stock-tile .cap-rank { color: var(--mint); font-size: 12px; font-weight: 1000; }
 .stock-tile .symbol { display: inline-flex; margin: 11px 0 8px; border-radius: 999px; background: rgba(57,229,140,.14); color: var(--mint); padding: 6px 10px; font-size: 18px; font-weight: 1000; }
