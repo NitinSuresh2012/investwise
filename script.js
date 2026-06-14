@@ -522,6 +522,85 @@ const simpleIconSlugs = {
   XOM: "exxonmobil"
 };
 
+const logoBrandColors = {
+  NVDA: "76B900",
+  AAPL: "111111",
+  MSFT: "5E5E5E",
+  GOOGL: "4285F4",
+  AMZN: "FF9900",
+  AVGO: "CC092F",
+  META: "0866FF",
+  TSLA: "E82127",
+  LLY: "D52B1E",
+  AMD: "ED1C24",
+  ADBE: "FF0000",
+  CRM: "00A1E0",
+  CSCO: "1BA0D7",
+  INTC: "0071C5",
+  IBM: "052FAD",
+  ORCL: "F80000",
+  QCOM: "3253DC",
+  TXN: "CC0000",
+  NFLX: "E50914",
+  DIS: "113CCF",
+  CMCSA: "00AEEF",
+  TMUS: "E20074",
+  T: "009FDB",
+  VZ: "CD040B",
+  V: "1434CB",
+  MA: "EB001B",
+  JPM: "005EB8",
+  BAC: "012169",
+  GS: "7399C6",
+  AXP: "2E77BC",
+  C: "004B8D",
+  WFC: "D71E28",
+  BLK: "000000",
+  SCHW: "0073CF",
+  WMT: "0071CE",
+  COST: "E31837",
+  HD: "F96302",
+  LOW: "004990",
+  MCD: "FFC72C",
+  SBUX: "00754A",
+  NKE: "111111",
+  KO: "D00013",
+  PEP: "2151A1",
+  PG: "003DA5",
+  CL: "E21B2D",
+  MDLZ: "502172",
+  XOM: "FF6600",
+  CVX: "0066B3",
+  COP: "EE3124",
+  CAT: "FFCD11",
+  BA: "1D439C",
+  GE: "0870D8",
+  GM: "0170CE",
+  FDX: "4D148C",
+  UPS: "351C15",
+  DE: "367C2B",
+  LMT: "005DAA",
+  RTX: "CE1126",
+  UNP: "003DA5",
+  JNJ: "D71920",
+  PFE: "0093D0",
+  MRK: "00857C",
+  ABBV: "071D49",
+  ABT: "008FC5",
+  AMGN: "005EB8",
+  GILD: "C4D600",
+  TMO: "E7131A",
+  ISRG: "00A3E0",
+  CVS: "CC0000",
+  MDT: "1010EB",
+  UNH: "005DAA",
+  LRCX: "00A3E0",
+  NOW: "81B5A1",
+  PLTR: "111111",
+  UBER: "111111",
+  LIN: "00A3E0"
+};
+
 let cash = 10000;
 let holdings = { VOO: 8, QQQ: 6, NVDA: 10, MSFT: 5 };
 let budget = { rent: 1400, food: 520, transportation: 240, entertainment: 280, savings: 780, investing: 780 };
@@ -1227,7 +1306,10 @@ function companyLogoMarkup(symbol, name) {
 
 function logoSources(symbol) {
   const sources = [];
-  if (simpleIconSlugs[symbol]) sources.push(`https://cdn.simpleicons.org/${simpleIconSlugs[symbol]}`);
+  if (simpleIconSlugs[symbol]) {
+    const color = logoBrandColors[symbol];
+    sources.push(color ? `https://cdn.simpleicons.org/${simpleIconSlugs[symbol]}/${color}` : `https://cdn.simpleicons.org/${simpleIconSlugs[symbol]}`);
+  }
   return sources;
 }
 
