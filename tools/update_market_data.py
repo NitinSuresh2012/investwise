@@ -1,5 +1,6 @@
 import json
 import math
+import os
 import time
 import urllib.parse
 import urllib.request
@@ -57,21 +58,64 @@ def compact_market_cap(value):
     return f"${value:,.0f}"
 
 
-def fetch_quotes(symbols):
+def fetch_json(url):
+    request = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Investopedia education site data updater"}
+    )
+    with urllib.request.urlopen(request, timeout=25) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+def fetch_fmp_quotes(symbols, api_key):
     results = []
-    for start in range(0, len(symbols), 40):
+    for start in range(0, len(symbols), 80):
         batch = symbols[start:start + 40]
-        query = urllib.parse.urlencode({"symbols": ",".join(batch)})
-        url = f"https://query1.finance.yahoo.com/v7/finance/quote?{query}"
-        request = urllib.request.Request(
-            url,
-            headers={"User-Agent": "Investopedia education site data updater"}
-        )
-        with urllib.request.urlopen(request, timeout=25) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-        results.extend(payload.get("quoteResponse", {}).get("result", []))
+        url_symbols = ",".join(batch)
+        url = f"https://financialmodelingprep.com/api/v3/quote/{url_symbols}?apikey={api_key}"
+        for item in fetch_json(url):
+            results.append({
+                "symbol": display_symbol(item.get("symbol", "")),
+                "regularMarketPrice": item.get("price"),
+                "regularMarketPreviousClose": item.get("previousClose"),
+                "marketCap": item.get("marketCap"),
+                "trailingPE": item.get("pe"),
+                "shortName": item.get("name"),
+                "sector": None
+            })
         time.sleep(0.4)
     return results
+
+
+def fetch_stooq_prices(symbols):
+    results = []
+    for symbol in symbols:
+        stooq_symbol = yahoo_symbol(symbol).lower().replace("-", "-") + ".us"
+        url = f"https://stooq.com/q/l/?s={urllib.parse.quote(stooq_symbol)}&f=sd2t2ohlcv&h&e=json"
+        try:
+            payload = fetch_json(url)
+            row = payload.get("symbols", [{}])[0]
+            close = float(row.get("close"))
+            results.append({
+                "symbol": display_symbol(symbol),
+                "regularMarketPrice": close,
+                "regularMarketPreviousClose": close,
+                "marketCap": None,
+                "trailingPE": None,
+                "shortName": display_symbol(symbol),
+                "sector": None
+            })
+        except Exception as error:
+            print(f"Skipping {symbol}: {error}")
+        time.sleep(0.1)
+    return results
+
+
+def fetch_quotes(symbols):
+    api_key = os.environ.get("FMP_API_KEY", "").strip()
+    if api_key:
+        return fetch_fmp_quotes(symbols, api_key)
+    return fetch_stooq_prices(symbols)
 
 
 def valuation_status(quote):
@@ -88,6 +132,11 @@ def valuation_status(quote):
 
 
 def main():
+    existing_path = Path("market-data.json")
+    existing = {}
+    if existing_path.exists():
+        existing = json.loads(existing_path.read_text(encoding="utf-8"))
+
     quotes = fetch_quotes(SYMBOLS)
     quotes_by_symbol = {display_symbol(item["symbol"]): item for item in quotes if item.get("symbol")}
     now = datetime.now(timezone.utc)
@@ -124,10 +173,14 @@ def main():
     output = {
         "updatedLabel": now.strftime("%b %d, %Y %I:%M %p UTC"),
         "officialCloseDate": now.strftime("%b %d, %Y"),
-        "marketCapSnapshotLabel": f"Yahoo Finance quote snapshot generated {now.strftime('%b %d, %Y %I:%M %p UTC')}",
-        "prices": prices,
-        "marketCapLeaders": leaders,
-        "valuationOverrides": valuation
+        "marketCapSnapshotLabel": (
+            f"FMP snapshot generated {now.strftime('%b %d, %Y %I:%M %p UTC')}"
+            if leaders else
+            existing.get("marketCapSnapshotLabel", "Static market-cap fallback; add FMP_API_KEY for automatic market-cap updates")
+        ),
+        "prices": {**existing.get("prices", {}), **prices},
+        "marketCapLeaders": leaders or existing.get("marketCapLeaders", []),
+        "valuationOverrides": valuation if leaders else existing.get("valuationOverrides", {})
     }
 
     Path("market-data.json").write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
