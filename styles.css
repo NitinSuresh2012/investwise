@@ -161,6 +161,10 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .brand-mark.fidelity strong { color: #07833d; font-size: 13px; }
 .brand-mark.greenlight i { background: #00c853; color: #062d16; }
 .brand-mark.greenlight strong { color: #00a846; font-size: 15px; }
+.brand-mark.robinhood i { background: #00c805; color: #062d16; }
+.brand-mark.robinhood strong { color: #00a805; font-size: 15px; }
+.brand-mark.schwab i { background: #0073cf; color: #fff; }
+.brand-mark.schwab strong { color: #0067b8; font-size: 13px; }
 .platform-card h4 { margin: 0; font-size: 22px; }
 .platform-card .tag { border-radius: 999px; background: rgba(57,229,140,.13); color: var(--mint); padding: 6px 9px; font-size: 12px; font-weight: 1000; }
 .platform-card p { color: var(--muted); line-height: 1.55; margin: 10px 0 0; }
@@ -200,6 +204,9 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 }
 .company-logo { width: 32px; height: 32px; object-fit: contain; display: block; }
 .logo-fallback { display: none; color: #0f172a; font-weight: 1000; font-size: 13px; }
+.logo-fallback.visible { display: block; }
+.logo-wrap.ticker-logo { background: linear-gradient(145deg, #ffffff, #e8fff3); border-color: rgba(57,229,140,.35); }
+.logo-wrap.ticker-logo .logo-fallback { color: #07100c; font-size: 12px; letter-spacing: 0; }
 .stock-tile .rank { color: var(--muted); font-size: 12px; font-weight: 1000; letter-spacing: .12em; }
 .stock-tile .cap-rank { color: var(--mint); font-size: 12px; font-weight: 1000; }
 .stock-tile .symbol { display: inline-flex; margin: 11px 0 8px; border-radius: 999px; background: rgba(57,229,140,.14); color: var(--mint); padding: 6px 10px; font-size: 18px; font-weight: 1000; }

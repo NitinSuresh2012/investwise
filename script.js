@@ -669,10 +669,7 @@ function setupAssetSearch() {
     const filtered = simulatorAssets.filter(asset => `${asset.symbol} ${asset.name} ${asset.sector}`.toLowerCase().includes(query)).slice(0, 30);
     results.innerHTML = filtered.map(asset => `
       <button class="asset-option" data-asset="${asset.symbol}" type="button">
-        <div class="logo-wrap">
-          <img class="company-logo" src="${logoUrl(asset.symbol)}" alt="${asset.name} logo" loading="lazy" data-logo-index="0" onerror="advanceLogo(this, '${asset.symbol}')">
-          <span class="logo-fallback">${asset.symbol.slice(0, 4)}</span>
-        </div>
+        ${companyLogoMarkup(asset.symbol, asset.name)}
         <span><b>${asset.symbol} · ${asset.name}</b>${asset.sector}</span>
         <em>${money(asset.price)}</em>
       </button>
@@ -878,10 +875,7 @@ function renderTopStocks() {
       <article class="stock-tile" data-symbol="${stock.symbol}" tabindex="0" role="button" aria-label="Open ${stock.name} details">
         <div class="stock-top">
           <span class="${marketCapRanks[stock.symbol] ? "cap-rank" : "rank"}">${marketCapRanks[stock.symbol] ? `Market cap #${marketCapRanks[stock.symbol].rank}` : `#${String(stock.rank).padStart(3, "0")}`}</span>
-          <div class="logo-wrap" title="${stock.name} logo">
-            <img class="company-logo" src="${logoUrl(stock.symbol)}" alt="${stock.name} logo" loading="lazy" data-logo-index="0" onerror="advanceLogo(this, '${stock.symbol}')">
-            <span class="logo-fallback">${stock.symbol.replace(".B", "")}</span>
-          </div>
+          ${companyLogoMarkup(stock.symbol, stock.name)}
         </div>
         <div class="symbol">${stock.symbol}</div>
         <h4>${stock.name}</h4>
@@ -982,10 +976,6 @@ function defaultLessonDetail(title) {
   };
 }
 
-function platformLogoUrl(slug) {
-  return platformLogoSources(slug)[0];
-}
-
 function platformLogoMarkup(platform) {
   if (platform.logo === "fidelity") {
     return `<div class="platform-logo built-in" aria-label="Fidelity Youth logo"><div class="brand-mark fidelity"><i>F</i><strong>Fidelity<br>Youth</strong></div></div>`;
@@ -993,47 +983,13 @@ function platformLogoMarkup(platform) {
   if (platform.logo === "greenlight") {
     return `<div class="platform-logo built-in" aria-label="Greenlight logo"><div class="brand-mark greenlight"><i>G</i><strong>Greenlight</strong></div></div>`;
   }
-  return `
-    <div class="platform-logo">
-      <img src="${platformLogoUrl(platform.logo)}" alt="${platform.name} logo" loading="lazy" data-platform-logo-index="0" onerror="advancePlatformLogo(this, '${platform.logo}')">
-      <span>${platform.name.split(" ").map(word => word[0]).join("").slice(0, 3)}</span>
-    </div>
-  `;
-}
-
-function platformLogoSources(slug) {
-  return {
-    fidelity: [
-      "https://cdn.simpleicons.org/fidelityinvestments",
-      "https://logo.clearbit.com/fidelity.com",
-      "https://www.google.com/s2/favicons?domain=fidelity.com&sz=128"
-    ],
-    greenlight: [
-      "https://logo.clearbit.com/greenlight.com",
-      "https://www.google.com/s2/favicons?domain=greenlight.com&sz=128"
-    ],
-    robinhood: [
-      "https://cdn.simpleicons.org/robinhood",
-      "https://logo.clearbit.com/robinhood.com",
-      "https://www.google.com/s2/favicons?domain=robinhood.com&sz=128"
-    ],
-    schwab: [
-      "https://logo.clearbit.com/schwab.com",
-      "https://www.google.com/s2/favicons?domain=schwab.com&sz=128"
-    ]
-  }[slug] || [];
-}
-
-function advancePlatformLogo(image, slug) {
-  const sources = platformLogoSources(slug);
-  const nextIndex = Number(image.dataset.platformLogoIndex || 0) + 1;
-  if (sources[nextIndex]) {
-    image.dataset.platformLogoIndex = String(nextIndex);
-    image.src = sources[nextIndex];
-    return;
+  if (platform.logo === "robinhood") {
+    return `<div class="platform-logo built-in" aria-label="Robinhood logo"><div class="brand-mark robinhood"><i>R</i><strong>Robinhood</strong></div></div>`;
   }
-  image.style.display = "none";
-  image.nextElementSibling.style.display = "block";
+  if (platform.logo === "schwab") {
+    return `<div class="platform-logo built-in" aria-label="Schwab Teen Investor logo"><div class="brand-mark schwab"><i>S</i><strong>Schwab<br>Teen</strong></div></div>`;
+  }
+  return `<div class="platform-logo built-in"><div class="brand-mark"><i>${platform.name[0]}</i><strong>${platform.name}</strong></div></div>`;
 }
 
 function renderMarketCapLeaders() {
@@ -1045,10 +1001,7 @@ function renderMarketCapLeaders() {
     const change = quote ? (quote.current - quote.close) / quote.close : null;
     return `
       <article class="leader-card" data-leader="${leader.symbol}" tabindex="0" role="button" aria-label="Open ${name} details">
-        <div class="logo-wrap">
-          <img class="company-logo" src="${logoUrl(leader.symbol)}" alt="${name} logo" loading="lazy" data-logo-index="0" onerror="advanceLogo(this, '${leader.symbol}')">
-          <span class="logo-fallback">${leader.symbol.replace(".B", "")}</span>
-        </div>
+        ${companyLogoMarkup(leader.symbol, name)}
         <span class="leader-rank">Market cap #${leader.rank}</span>
         <h4>${leader.symbol} · ${name}</h4>
         ${quote ? `<div class="leader-price"><b>${moneyExact(quote.current)}</b><span>${change >= 0 ? "+" : ""}${(change * 100).toFixed(2)}%</span></div>` : ""}
@@ -1098,10 +1051,7 @@ function openStockDetail(symbol) {
     : "";
   document.getElementById("stockDetail").innerHTML = `
     <div class="detail-hero">
-      <div class="logo-wrap">
-        <img class="company-logo" src="${logoUrl(stock.symbol)}" alt="${stock.name} logo" data-logo-index="0" onerror="advanceLogo(this, '${stock.symbol}')">
-        <span class="logo-fallback">${stock.symbol.replace(".B", "")}</span>
-      </div>
+      ${companyLogoMarkup(stock.symbol, stock.name)}
       <div>
         <h3>${stock.symbol}</h3>
         <p>${stock.name} • ${stock.sector}</p>
@@ -1261,14 +1211,23 @@ function logoUrl(symbol) {
   return logoSources(symbol)[0] || "";
 }
 
+function companyLogoMarkup(symbol, name) {
+  const source = logoUrl(symbol);
+  const safeSymbol = symbol.replace(".B", "").slice(0, 5);
+  if (!source) {
+    return `<div class="logo-wrap ticker-logo" title="${name} logo badge"><span class="logo-fallback visible">${safeSymbol}</span></div>`;
+  }
+  return `
+    <div class="logo-wrap" title="${name} logo">
+      <img class="company-logo" src="${source}" alt="${name} logo" loading="lazy" data-logo-index="0" onerror="advanceLogo(this, '${symbol}')">
+      <span class="logo-fallback">${safeSymbol}</span>
+    </div>
+  `;
+}
+
 function logoSources(symbol) {
   const sources = [];
   if (simpleIconSlugs[symbol]) sources.push(`https://cdn.simpleicons.org/${simpleIconSlugs[symbol]}`);
-  const domain = logoDomains[symbol];
-  if (domain) {
-    sources.push(`https://logo.clearbit.com/${domain}`);
-    sources.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-  }
   return sources;
 }
 
@@ -1281,7 +1240,8 @@ function advanceLogo(image, symbol) {
     return;
   }
   image.style.display = "none";
-  image.nextElementSibling.style.display = "block";
+  image.parentElement.classList.add("ticker-logo");
+  image.nextElementSibling.classList.add("visible");
 }
 
 document.getElementById("themeBtn").addEventListener("click", () => {
