@@ -67,6 +67,27 @@ const etfs = [
   ["VTI", "Low-Medium", "Apple, Microsoft, Nvidia, thousands more", "Includes large, medium, and small US companies."]
 ];
 
+const talkedAboutWatchlist = [
+  ["NVDA", "AI chip leader", "Nvidia is still one of the most watched AI names because its GPUs power many data centers and AI models.", "Watch AI chip demand, margins, and competition."],
+  ["AMD", "AI chip challenger", "AMD is talked about because investors compare its AI accelerators and CPUs with Nvidia and Intel.", "Watch data center growth and whether big cloud customers buy more AMD chips."],
+  ["INTC", "Turnaround chip story", "Intel gets attention because it is trying to rebuild its chip manufacturing lead while competing in PCs, servers, and AI.", "Watch factory progress, cash flow, and product execution."],
+  ["MU", "AI memory demand", "Micron makes memory chips used in AI servers, phones, PCs, and data centers, so it often moves with AI hardware demand.", "Watch memory prices because this business can be cyclical."],
+  ["AVGO", "AI networking", "Broadcom is popular with investors because AI data centers need networking chips and infrastructure software.", "Watch customer concentration and chip cycle risk."],
+  ["AAPL", "Consumer tech giant", "Apple is always talked about because of iPhone demand, services revenue, and how it adds AI features into its products.", "Watch upgrade cycles, China sales, and services growth."],
+  ["MSFT", "Cloud and AI", "Microsoft is watched because Azure, Office, GitHub, gaming, and AI tools touch many businesses every day.", "Watch cloud growth, AI spending, and competition."],
+  ["GOOGL", "Search, ads, and AI", "Alphabet is talked about because Google Search, YouTube, Android, Cloud, and AI products create huge cash flow.", "Watch ad growth, AI competition, and regulation."],
+  ["AMZN", "Cloud plus shopping", "Amazon gets attention because AWS is a major cloud platform while retail, ads, and logistics keep expanding.", "Watch cloud margins and retail profitability."],
+  ["META", "Social apps and AI ads", "Meta is watched because Facebook, Instagram, WhatsApp, and Threads reach billions of people and use AI to improve ads.", "Watch ad demand, privacy rules, and spending discipline."],
+  ["TSLA", "EV and autonomy", "Tesla stays highly discussed because investors debate EV demand, pricing, energy storage, and self-driving progress.", "Watch deliveries, margins, and autonomy expectations."],
+  ["PLTR", "AI software", "Palantir is talked about because it sells data and AI software to governments and companies.", "Watch revenue growth, valuation, and contract quality."],
+  ["ORCL", "Cloud infrastructure", "Oracle is watched because more AI and database workloads are moving into its cloud infrastructure.", "Watch cloud capacity, debt, and customer growth."],
+  ["QCOM", "Mobile and edge AI", "Qualcomm is discussed because its chips power phones, cars, devices, and possible on-device AI.", "Watch smartphone demand and diversification beyond phones."],
+  ["LRCX", "Chip equipment", "Lam Research matters because chip makers need equipment to build advanced semiconductors.", "Watch semiconductor spending cycles."],
+  ["NFLX", "Streaming leader", "Netflix is watched because it leads streaming, grows ads, and has strong pricing power.", "Watch subscriber growth, content costs, and competition."],
+  ["UBER", "Platform growth", "Uber gets attention because rides, delivery, and advertising can grow together at global scale.", "Watch margins, regulation, and competition."],
+  ["QQQ", "Tech-heavy ETF", "QQQ is a popular way to follow many large Nasdaq growth companies instead of betting on only one stock.", "Watch concentration because a few giant tech names can drive a lot of the ETF."]
+];
+
 const lessonDetails = {
   "Needs vs Wants": {
     idea: "Needs are things you must pay for to live safely, like food, housing, basic clothes, transportation, and school supplies. Wants are extras that make life nicer, like games, snacks, subscriptions, and upgraded gadgets.",
@@ -654,13 +675,30 @@ function renderCards() {
     </article>
   `).join("");
 
-  document.querySelector(".watch-grid").innerHTML = ["MU", "QQQ", "AAPL"].map(symbol => {
+  document.querySelector(".watch-grid").innerHTML = talkedAboutWatchlist.map(([symbol, theme, insight, watch]) => {
     const asset = assetBySymbol(symbol);
+    const stock = topStocks.find(item => item.symbol === symbol);
+    const quote = quoteSnapshot?.prices?.[symbol];
+    const price = quote?.current || asset?.price || (stock ? syntheticPrice(stock.symbol, stock.rank) : 0);
+    const valuation = stock ? valuationLens(stock) : { status: "fair", label: "Fair" };
+    const name = asset?.name || stock?.name || symbol;
     return `
-      <article class="card info">
-        <div class="card-head"><h4>${asset.symbol}</h4><span>${money(asset.price)}</span></div>
-        <p>${asset.name}</p>
-        <p><b>AI Insight</b><br>${asset.insight}</p>
+      <article class="card info watch-card">
+        <div class="watch-head">
+          ${companyLogoMarkup(symbol, name)}
+          <div>
+            <h4>${symbol}</h4>
+            <p>${name}</p>
+          </div>
+          <span>${price ? moneyExact(price) : "Watch"}</span>
+        </div>
+        <div class="watch-tags">
+          <span>${theme}</span>
+          <span class="valuation-badge ${valuation.status}">${valuation.label}</span>
+        </div>
+        <p><b>Why people talk about it</b><br>${insight}</p>
+        <p><b>Beginner watch point</b><br>${watch}</p>
+        <small>Curated for education from recent tech and market chatter. Educational purposes only.</small>
       </article>
     `;
   }).join("");

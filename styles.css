@@ -290,6 +290,18 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .detail-box p { margin: 0; color: var(--muted); line-height: 1.6; }
 .detail-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .detail-links a { border-radius: 999px; background: var(--mint); color: #07100c; padding: 9px 12px; font-weight: 1000; text-decoration: none; }
+.watch-card { display: flex; flex-direction: column; gap: 10px; }
+.watch-card p { margin: 0; }
+.watch-card small { color: var(--muted); line-height: 1.45; }
+.watch-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
+.watch-head .logo-wrap { width: 44px; height: 44px; border-radius: 15px; }
+.watch-head .company-logo { width: 30px; height: 30px; }
+.watch-head h4 { margin: 0; font-size: 19px; }
+.watch-head p { margin-top: 3px; color: var(--muted); font-size: 13px; font-weight: 800; }
+.watch-head > span { color: var(--mint); font-weight: 1000; white-space: nowrap; }
+.watch-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.watch-tags > span:first-child { border-radius: 999px; background: var(--panel-2); color: var(--text); padding: 6px 9px; font-size: 12px; font-weight: 1000; }
+.watch-tags .valuation-badge { margin-top: 0; }
 
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes grow { from { width: 0; } }
