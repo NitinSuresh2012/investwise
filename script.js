@@ -1105,19 +1105,22 @@ function defaultLessonDetail(title) {
 }
 
 function platformLogoMarkup(platform) {
-  if (platform.logo === "fidelity") {
-    return `<div class="platform-logo built-in" aria-label="Fidelity Youth logo"><div class="platform-wordmark fidelity"><i class="mark"></i><strong>Fidelity<small>Youth</small></strong></div></div>`;
+  const logos = {
+    fidelity: ["./assets/platforms/fidelity.png", "Fidelity Youth logo"],
+    greenlight: ["./assets/platforms/greenlight.svg", "Greenlight logo"],
+    robinhood: ["./assets/platforms/robinhood.png", "Robinhood logo"],
+    schwab: ["./assets/platforms/schwab.png", "Schwab Teen Investor logo"]
+  };
+  const logo = logos[platform.logo];
+  if (!logo) {
+    return `<div class="platform-logo actual"><span class="platform-fallback" style="display:block">${platform.name}</span></div>`;
   }
-  if (platform.logo === "greenlight") {
-    return `<div class="platform-logo built-in" aria-label="Greenlight logo"><div class="platform-wordmark greenlight"><i class="mark"></i><strong>Greenlight<small>Investing</small></strong></div></div>`;
-  }
-  if (platform.logo === "robinhood") {
-    return `<div class="platform-logo built-in" aria-label="Robinhood logo"><div class="platform-wordmark robinhood"><i class="mark"></i><strong>Robinhood<small>Learn</small></strong></div></div>`;
-  }
-  if (platform.logo === "schwab") {
-    return `<div class="platform-logo built-in" aria-label="Schwab Teen Investor logo"><div class="platform-wordmark schwab"><i class="mark">S</i><strong>Schwab<small>Teen</small></strong></div></div>`;
-  }
-  return `<div class="platform-logo built-in"><div class="brand-mark"><i>${platform.name[0]}</i><strong>${platform.name}</strong></div></div>`;
+  return `
+    <div class="platform-logo actual ${platform.logo}" aria-label="${logo[1]}">
+      <img src="${logo[0]}" alt="${logo[1]}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="platform-fallback">${platform.name}</span>
+    </div>
+  `;
 }
 
 function renderMarketCapLeaders() {

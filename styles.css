@@ -154,6 +154,16 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .platform-logo { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 18px; background: #fff; border: 1px solid var(--line); }
 .platform-logo img { width: 34px; height: 34px; object-fit: contain; }
 .platform-logo span { display: none; color: #0f172a; font-size: 13px; font-weight: 1000; }
+.platform-logo.actual { width: 120px; height: 58px; border-radius: 18px; padding: 8px 10px; overflow: hidden; }
+.platform-logo.actual img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.platform-logo.actual.fidelity { background: #368727; border-color: rgba(255,255,255,.2); }
+.platform-logo.actual.fidelity img { width: 102px; }
+.platform-logo.actual.greenlight img { width: 104px; }
+.platform-logo.actual.robinhood { width: 58px; padding: 0; background: #c3ff00; border-color: rgba(195,255,0,.35); }
+.platform-logo.actual.robinhood img { width: 58px; height: 58px; border-radius: 18px; }
+.platform-logo.actual.schwab { width: 58px; padding: 0; background: #00a0df; }
+.platform-logo.actual.schwab img { width: 58px; height: 58px; }
+.platform-fallback { padding: 0 4px; text-align: center; line-height: 1.1; }
 .platform-logo.built-in { width: auto; min-width: 118px; padding: 8px 11px; place-items: center; }
 .brand-mark { display: flex; align-items: center; gap: 8px; color: #0f172a; font-weight: 1000; line-height: 1; }
 .brand-mark i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; font-style: normal; font-size: 15px; position: relative; overflow: hidden; }
