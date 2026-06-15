@@ -44,6 +44,7 @@
         <button data-tab="etfs">ETFs</button>
         <button data-tab="sim">Simulator</button>
         <button data-tab="budget">Budget</button>
+        <button data-tab="savings">Savings</button>
         <button data-tab="topstocks">Top 100</button>
         <button data-tab="platforms">Platforms</button>
         <button data-tab="coach">FinCoach</button>
@@ -158,6 +159,33 @@
               <p class="hint">A healthy beginner target is saving and investing at least 20% while keeping flexible spending under control.</p>
             </article>
           </div>
+        </section>
+
+        <section id="savings" class="panel">
+          <div class="section-title">
+            <p>Savings simulator</p>
+            <h3>Build an emergency fund and goal plan</h3>
+          </div>
+          <div class="grid two">
+            <article class="card savings-controls">
+              <div class="savings-goal-row">
+                <button class="goal-chip active" data-goal-preset="1000">$1k starter</button>
+                <button class="goal-chip" data-goal-preset="3000">$3k emergency</button>
+                <button class="goal-chip" data-goal-preset="6000">$6k safety net</button>
+              </div>
+              <div class="savings-inputs"></div>
+            </article>
+            <article class="card savings-summary">
+              <div class="stats vertical">
+                <div><span>Goal progress</span><b id="savingProgress">0%</b></div>
+                <div><span>Months to goal</span><b id="savingMonths">0</b></div>
+                <div><span>Projected balance</span><b id="savingProjection">$0</b></div>
+              </div>
+              <div class="saving-meter"><i id="savingMeter"></i></div>
+              <p class="hint" id="savingAdvice">Start with a small automatic transfer, then grow it when your budget has room.</p>
+            </article>
+          </div>
+          <div class="grid three saving-plan"></div>
         </section>
 
         <section id="coach" class="panel">

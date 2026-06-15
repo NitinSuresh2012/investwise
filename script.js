@@ -636,6 +636,7 @@ const logoBrandColors = {
 let cash = 10000;
 let holdings = { VOO: 8, QQQ: 6, NVDA: 10, MSFT: 5 };
 let budget = { rent: 1400, food: 520, transportation: 240, entertainment: 280, savings: 780, investing: 780 };
+let savings = { goal: 1000, current: 250, monthly: 150, apy: 4 };
 let selectedSimSymbol = "VTI";
 
 const money = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
@@ -882,6 +883,86 @@ function updateBudget() {
   document.getElementById("saveRate").textContent = pct(wealth / 4000);
   document.getElementById("growth").textContent = money(wealth);
   document.getElementById("financeScore").textContent = `${score}/100`;
+}
+
+function renderSavings() {
+  const controls = [
+    ["goal", "Savings goal", 500, 10000, 100],
+    ["current", "Current savings", 0, 10000, 50],
+    ["monthly", "Monthly transfer", 25, 1200, 25],
+    ["apy", "Savings APY", 0, 6, 0.25]
+  ];
+  document.querySelector(".savings-inputs").innerHTML = controls.map(([key, label, min, max, step]) => `
+    <div class="budget-control">
+      <label><span>${label}</span><b id="${key}SavingOut">${key === "apy" ? `${savings[key]}%` : money(savings[key])}</b></label>
+      <input type="range" min="${min}" max="${max}" step="${step}" value="${savings[key]}" data-saving="${key}">
+    </div>
+  `).join("");
+
+  document.querySelectorAll("[data-saving]").forEach(input => {
+    input.addEventListener("input", () => {
+      savings[input.dataset.saving] = Number(input.value);
+      document.querySelectorAll("[data-goal-preset]").forEach(button => button.classList.toggle("active", Number(button.dataset.goalPreset) === savings.goal));
+      updateSavings();
+    });
+  });
+
+  document.querySelectorAll("[data-goal-preset]").forEach(button => {
+    button.addEventListener("click", () => {
+      savings.goal = Number(button.dataset.goalPreset);
+      const goalInput = document.querySelector('[data-saving="goal"]');
+      goalInput.value = savings.goal;
+      document.querySelectorAll("[data-goal-preset]").forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+      updateSavings();
+    });
+  });
+
+  updateSavings();
+}
+
+function updateSavings() {
+  const monthlyRate = savings.apy / 100 / 12;
+  let balance = savings.current;
+  let months = 0;
+  while (balance < savings.goal && months < 240) {
+    balance = balance * (1 + monthlyRate) + savings.monthly;
+    months += 1;
+  }
+  const oneYearBalance = projectSavings(12);
+  const progress = Math.min(100, Math.round((savings.current / Math.max(savings.goal, 1)) * 100));
+  const emergencyMonths = savings.goal <= 1000 ? "starter emergency fund" : savings.goal <= 3000 ? "basic emergency fund" : "strong safety net";
+
+  document.getElementById("goalSavingOut").textContent = money(savings.goal);
+  document.getElementById("currentSavingOut").textContent = money(savings.current);
+  document.getElementById("monthlySavingOut").textContent = money(savings.monthly);
+  document.getElementById("apySavingOut").textContent = `${savings.apy}%`;
+  document.getElementById("savingProgress").textContent = `${progress}%`;
+  document.getElementById("savingMonths").textContent = months >= 240 ? "20y+" : `${months}`;
+  document.getElementById("savingProjection").textContent = money(oneYearBalance);
+  document.getElementById("savingMeter").style.width = `${progress}%`;
+  document.getElementById("savingAdvice").textContent = `This plan builds a ${emergencyMonths}. Keep emergency savings in cash or a savings account before taking investing risk.`;
+
+  document.querySelector(".saving-plan").innerHTML = [
+    ["Starter goal", `${money(Math.min(savings.goal, 1000))}`, "First target: cover a surprise bill without debt."],
+    ["Monthly habit", money(savings.monthly), "Automate this transfer right after money comes in."],
+    ["One-year path", money(oneYearBalance), "Projected after 12 months with your current APY setting."]
+  ].map(([title, value, text]) => `
+    <article class="card score-card saving-step">
+      <span>${title}</span>
+      <b>${value}</b>
+      <p>${text}</p>
+    </article>
+  `).join("");
+}
+
+function projectSavings(monthCount) {
+  const monthlyRate = savings.apy / 100 / 12;
+  let balance = savings.current;
+  for (let month = 0; month < monthCount; month += 1) {
+    balance = balance * (1 + monthlyRate) + savings.monthly;
+  }
+  return balance;
 }
 
 function setupCoach() {
@@ -1410,6 +1491,7 @@ renderCards();
 setupLessons();
 renderSimulator();
 renderBudget();
+renderSavings();
 setupCoach();
 renderTopStocks();
 renderPlatforms();

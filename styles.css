@@ -128,6 +128,14 @@ select, input { min-width: 0; width: 100%; border: 1px solid var(--line); border
 .score-card b { display: block; font-size: 46px; margin: 10px 0; color: var(--mint); }
 .budget-control { margin-bottom: 18px; }
 .budget-control label { display: flex; justify-content: space-between; font-weight: 1000; margin-bottom: 8px; text-transform: capitalize; }
+.savings-goal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.goal-chip { border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--muted); padding: 9px 11px; font-weight: 1000; }
+.goal-chip.active { background: var(--mint); color: #07100c; border-color: transparent; box-shadow: 0 14px 36px rgba(57,229,140,.18); }
+.savings-summary { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+.saving-meter { height: 14px; border-radius: 999px; overflow: hidden; background: var(--panel-2); border: 1px solid var(--line); }
+.saving-meter i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--mint), var(--sky)); transition: width .35s ease; }
+.saving-plan { margin-top: 14px; }
+.saving-step b { color: var(--mint); }
 input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .answer { margin-top: 14px; color: var(--text); line-height: 1.7; }
 .coach-response { display: grid; gap: 12px; }
