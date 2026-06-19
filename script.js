@@ -637,6 +637,10 @@ let cash = 10000;
 let holdings = { VOO: 8, QQQ: 6, NVDA: 10, MSFT: 5 };
 let budget = { rent: 1400, food: 520, transportation: 240, entertainment: 280, savings: 780, investing: 780 };
 let savings = { goal: 1000, current: 250, monthly: 150, apy: 4 };
+let portfolioBudget = 25000;
+let portfolioCash = 1250;
+let portfolioHoldings = { QQQ: 4500, VOO: 6000, GOOGL: 3250, NVDA: 2750, MSFT: 2500, AAPL: 1750, META: 1500, AMZN: 1500 };
+let selectedPortfolioSymbol = "NVDA";
 let selectedSimSymbol = "VTI";
 
 const money = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
@@ -832,6 +836,183 @@ function selectSimAsset(symbol) {
   document.getElementById("assetSearch").value = `${asset.symbol} - ${asset.name}`;
   document.getElementById("assetResults").classList.remove("open");
   document.getElementById("selectedAsset").innerHTML = `<b>${asset.symbol}</b> ${asset.name} · ${asset.sector} · ${money(asset.price)}<br>${asset.insight}`;
+}
+
+function renderPortfolioBuilder() {
+  const budgetInput = document.getElementById("portfolioBudgetInput");
+  const amountInput = document.getElementById("portfolioAmount");
+  budgetInput.value = portfolioBudget;
+  setupPortfolioSearch();
+  document.getElementById("portfolioQuickPicks").innerHTML = ["NVDA", "MSFT", "AAPL", "GOOGL", "AMZN", "META", "QQQ", "VOO"].map(symbol => {
+    const asset = portfolioAssetBySymbol(symbol);
+    return `<button class="quick-pick" data-portfolio-pick="${symbol}">${symbol}<small>${asset.name}</small></button>`;
+  }).join("");
+  document.querySelectorAll("[data-portfolio-pick]").forEach(button => {
+    button.addEventListener("click", () => selectPortfolioAsset(button.dataset.portfolioPick));
+  });
+  budgetInput.addEventListener("change", () => {
+    const nextBudget = Math.max(100, Number(budgetInput.value) || 100);
+    const scale = nextBudget / portfolioBudget;
+    portfolioBudget = nextBudget;
+    portfolioCash = Math.max(0, portfolioCash * scale);
+    Object.keys(portfolioHoldings).forEach(symbol => {
+      portfolioHoldings[symbol] = portfolioHoldings[symbol] * scale;
+    });
+    updateResearchPortfolio();
+  });
+  document.getElementById("portfolioInvestBtn").addEventListener("click", () => {
+    const amount = Math.max(25, Number(amountInput.value) || 25);
+    const investAmount = Math.min(amount, portfolioCash);
+    if (investAmount <= 0) return;
+    portfolioHoldings[selectedPortfolioSymbol] = (portfolioHoldings[selectedPortfolioSymbol] || 0) + investAmount;
+    portfolioCash = +(portfolioCash - investAmount).toFixed(2);
+    updateResearchPortfolio();
+  });
+  selectPortfolioAsset(selectedPortfolioSymbol);
+  updateResearchPortfolio();
+}
+
+function setupPortfolioSearch() {
+  const input = document.getElementById("portfolioSearch");
+  const results = document.getElementById("portfolioResults");
+  input.value = selectedPortfolioSymbol;
+
+  function drawResults() {
+    const query = input.value.trim().toLowerCase();
+    const filtered = simulatorAssets
+      .filter(asset => `${asset.symbol} ${asset.name} ${asset.sector}`.toLowerCase().includes(query))
+      .slice(0, 24);
+    results.innerHTML = filtered.map(asset => `
+      <button class="asset-option" data-portfolio-asset="${asset.symbol}" type="button">
+        ${companyLogoMarkup(asset.symbol, asset.name)}
+        <span><b>${asset.symbol} - ${asset.name}</b>${asset.sector}</span>
+        <em>${money(asset.price)}</em>
+      </button>
+    `).join("");
+    results.classList.add("open");
+    results.querySelectorAll("[data-portfolio-asset]").forEach(option => {
+      option.addEventListener("click", () => selectPortfolioAsset(option.dataset.portfolioAsset));
+    });
+  }
+
+  input.addEventListener("focus", drawResults);
+  input.addEventListener("input", drawResults);
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      const firstOption = results.querySelector("[data-portfolio-asset]");
+      if (firstOption) {
+        event.preventDefault();
+        selectPortfolioAsset(firstOption.dataset.portfolioAsset);
+      }
+    }
+  });
+  document.addEventListener("click", event => {
+    if (!event.target.closest("#portfolio .asset-picker")) results.classList.remove("open");
+  });
+}
+
+function selectPortfolioAsset(symbol) {
+  const asset = portfolioAssetBySymbol(symbol);
+  selectedPortfolioSymbol = asset.symbol;
+  document.getElementById("portfolioSearch").value = `${asset.symbol} - ${asset.name}`;
+  document.getElementById("portfolioResults").classList.remove("open");
+  document.getElementById("portfolioSelected").innerHTML = `<b>${asset.symbol}</b> ${asset.name} - ${asset.sector} - ${money(asset.price)}<br>${asset.insight}`;
+}
+
+function updateResearchPortfolio() {
+  const rows = Object.entries(portfolioHoldings)
+    .filter(([, dollars]) => dollars > 1)
+    .map(([symbol, dollars]) => {
+      const asset = portfolioAssetBySymbol(symbol);
+      const shares = dollars / asset.price;
+      const allocation = dollars / portfolioBudget;
+      return { ...asset, dollars, shares, allocation, day: simulatedReturn(symbol, "day"), month: simulatedReturn(symbol, "month"), year: simulatedReturn(symbol, "year") };
+    })
+    .sort((a, b) => b.dollars - a.dollars);
+  const invested = rows.reduce((sum, row) => sum + row.dollars, 0);
+  const cashPct = portfolioCash / portfolioBudget;
+  const today = weightedReturn(rows, "day") + cashPct * 0.01;
+  const month = weightedReturn(rows, "month");
+  const year = weightedReturn(rows, "year");
+  const colors = ["#2dd4bf", "#ff7a30", "#1f9d8a", "#7dd3fc", "#f43f5e", "#8b5cf6", "#22c55e", "#f59e0b", "#64748b"];
+  let angle = 0;
+  const segments = rows.map((row, index) => {
+    const start = angle;
+    angle += row.allocation * 100;
+    return `${colors[index % colors.length]} ${start}% ${angle}%`;
+  });
+  if (portfolioCash > 1) segments.push(`#d1d5db ${angle}% 100%`);
+
+  document.getElementById("portfolioBudgetLabel").textContent = money(portfolioBudget);
+  document.getElementById("portfolioCashLabel").textContent = money(portfolioCash);
+  document.getElementById("portfolioStockCount").textContent = rows.length;
+  document.getElementById("portfolioInvested").textContent = `${money(invested)} invested`;
+  setReturnText("portfolioReturn", today);
+  setReturnText("portfolioToday", today);
+  setReturnText("portfolioMonth", month);
+  setReturnText("portfolioYear", year);
+  document.getElementById("portfolioDonut").style.background = `radial-gradient(circle at center, var(--panel) 0 54%, transparent 55%), conic-gradient(${segments.join(", ")})`;
+  document.getElementById("portfolioLabels").innerHTML = rows.slice(0, 8).map((row, index) => `
+    <span><i style="background:${colors[index % colors.length]}"></i><b>${row.symbol}</b> ${Math.round(row.allocation * 100)}%</span>
+  `).join("") + (portfolioCash > 1 ? `<span><i style="background:#d1d5db"></i><b>Cash</b> ${Math.round(cashPct * 100)}%</span>` : "");
+  document.getElementById("portfolioTable").innerHTML = `
+    <div class="portfolio-table-head"><span>Symbol</span><span>Shares</span><span>Value</span><span>% portfolio</span><span>1D return</span><span></span></div>
+    ${rows.map(row => `
+      <div class="portfolio-row">
+        <span class="portfolio-symbol">${companyLogoMarkup(row.symbol, row.name)}<b>${row.symbol}</b><small>${row.name}</small></span>
+        <span>${row.shares.toFixed(2)}</span>
+        <span>${money(row.dollars)}</span>
+        <span>${Math.round(row.allocation * 100)}%</span>
+        <span class="${row.day >= 0 ? "green" : "red"}">${signedPct(row.day)}</span>
+        <button data-remove-position="${row.symbol}">Remove</button>
+      </div>
+    `).join("")}
+  `;
+  document.querySelectorAll("[data-remove-position]").forEach(button => {
+    button.addEventListener("click", () => {
+      const symbol = button.dataset.removePosition;
+      portfolioCash += portfolioHoldings[symbol] || 0;
+      delete portfolioHoldings[symbol];
+      updateResearchPortfolio();
+    });
+  });
+}
+
+function portfolioAssetBySymbol(symbol) {
+  const asset = simAssetBySymbol(symbol) || assetBySymbol(symbol);
+  if (asset) return asset;
+  const stock = topStocks.find(item => item.symbol === symbol) || topStocks[0];
+  return {
+    symbol: stock.symbol,
+    name: stock.name,
+    type: "stock",
+    sector: stock.sector,
+    risk: riskForSector(stock.sector),
+    price: syntheticPrice(stock.symbol, stock.rank),
+    insight: defaultDetail(stock)[0]
+  };
+}
+
+function weightedReturn(rows, key) {
+  return rows.reduce((sum, row) => sum + row[key] * row.allocation, 0);
+}
+
+function simulatedReturn(symbol, period) {
+  const code = symbol.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const ranges = { day: 7, month: 28, year: 72 };
+  const offsets = { day: -2.2, month: -8.5, year: -18 };
+  return (((code * (period.length + 3)) % (ranges[period] * 100)) / 100 + offsets[period]) / 100;
+}
+
+function signedPct(value) {
+  const formatted = (value * 100).toFixed(2);
+  return `${value >= 0 ? "+" : ""}${formatted}%`;
+}
+
+function setReturnText(id, value) {
+  const element = document.getElementById(id);
+  element.textContent = signedPct(value);
+  element.className = value >= 0 ? "positive" : "negative";
 }
 
 function syntheticPrice(symbol, rank) {
@@ -1490,6 +1671,7 @@ setupTabs();
 renderCards();
 setupLessons();
 renderSimulator();
+renderPortfolioBuilder();
 renderBudget();
 renderSavings();
 setupCoach();

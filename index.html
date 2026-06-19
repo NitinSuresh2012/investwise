@@ -43,6 +43,7 @@
         <button class="active" data-tab="learn">Learn</button>
         <button data-tab="etfs">ETFs</button>
         <button data-tab="sim">Simulator</button>
+        <button data-tab="portfolio">Portfolio</button>
         <button data-tab="budget">Budget</button>
         <button data-tab="savings">Savings</button>
         <button data-tab="topstocks">Top 100</button>
@@ -141,6 +142,67 @@
             <article class="card score-card"><span>ETF percentage</span><b id="etfPct">58%</b><p>Broad ETFs can hold hundreds or thousands of companies.</p></article>
             <article class="card score-card"><span>Sector exposure</span><b>Balanced</b><p>Software, chips, broad market ETFs, and cash.</p></article>
           </div>
+        </section>
+
+        <section id="portfolio" class="panel">
+          <div class="section-title">
+            <p>Portfolio builder</p>
+            <h3>Plan a practice portfolio from your budget</h3>
+          </div>
+          <article class="portfolio-profile">
+            <div class="portfolio-person">
+              <div class="avatar-ring">IW</div>
+              <div>
+                <strong>@student</strong>
+                <p>Long-term practice portfolio. Simulated only.</p>
+              </div>
+            </div>
+            <div class="portfolio-profile-stats">
+              <span><b id="portfolioStockCount">0</b> Stocks</span>
+              <span><b id="portfolioBudgetLabel">$0</b> Budget</span>
+              <span><b id="portfolioCashLabel">$0</b> Cash</span>
+            </div>
+          </article>
+          <div class="portfolio-toggle">
+            <button class="active">Portfolio</button>
+            <button>Research</button>
+          </div>
+          <div class="grid two">
+            <article class="card portfolio-builder-card">
+              <div class="budget-field">
+                <label for="portfolioBudgetInput">Total budget</label>
+                <input id="portfolioBudgetInput" type="number" min="100" step="100" value="25000" />
+              </div>
+              <div class="trade">
+                <div class="asset-picker">
+                  <input id="portfolioSearch" placeholder="Search stocks by symbol or company..." autocomplete="off" />
+                  <div id="portfolioResults" class="asset-results"></div>
+                </div>
+                <input id="portfolioAmount" type="number" min="25" step="25" value="1000" aria-label="Investment amount" />
+                <button id="portfolioInvestBtn">Invest</button>
+              </div>
+              <div id="portfolioSelected" class="selected-asset"></div>
+              <div class="quick-picks" id="portfolioQuickPicks"></div>
+            </article>
+            <article class="card portfolio-ring-card">
+              <div class="portfolio-range">
+                <button class="active">1D</button><button>1W</button><button>1M</button><button>3M</button><button>1Y</button>
+              </div>
+              <div class="portfolio-donut-wrap">
+                <div id="portfolioDonut" class="portfolio-donut"><span id="portfolioReturn">+0.00%</span><small>simulated</small></div>
+                <div id="portfolioLabels" class="portfolio-labels"></div>
+              </div>
+            </article>
+          </div>
+          <div class="grid three portfolio-return-cards">
+            <article class="card return-pill"><b id="portfolioToday">+0.00%</b><span>Today</span></article>
+            <article class="card return-pill"><b id="portfolioMonth">+0.00%</b><span>Past Month</span></article>
+            <article class="card return-pill"><b id="portfolioYear">+0.00%</b><span>Past Year</span></article>
+          </div>
+          <article class="card portfolio-table-card">
+            <div class="card-head"><h4>Current investments</h4><span id="portfolioInvested">$0 invested</span></div>
+            <div class="portfolio-table" id="portfolioTable"></div>
+          </article>
         </section>
 
         <section id="budget" class="panel">
