@@ -14,11 +14,15 @@ SYMBOLS = [
     "DE", "DHR", "DIS", "DUK", "EMR", "FDX", "GD", "GE", "GEV", "GILD",
     "GM", "GOOGL", "GS", "HD", "HON", "IBM", "INTC", "INTU", "ISRG", "JNJ",
     "JPM", "KO", "LIN", "LLY", "LMT", "LOW", "LRCX", "MA", "MCD", "MDLZ",
-    "MDT", "META", "MMM", "MO", "MRK", "MS", "MSFT", "MU", "NEE", "NFLX",
+    "MDT", "META", "MMM", "MO", "MRK", "MRVL", "MS", "MSFT", "MU", "NEE", "NFLX",
     "NKE", "NOW", "NVDA", "ORCL", "PEP", "PFE", "PG", "PLTR", "PM", "QCOM",
-    "RTX", "SBUX", "SCHW", "SO", "SPG", "T", "TMO", "TMUS", "TSLA", "TXN",
-    "UBER", "UNH", "UNP", "UPS", "USB", "V", "VZ", "WFC", "WMT", "XOM"
+    "RTX", "SBUX", "SCHW", "SMCI", "SNOW", "SO", "SOFI", "SPG", "T", "TMO",
+    "TMUS", "TSLA", "TSM", "TXN", "UBER", "UNH", "UNP", "UPS", "USB", "V",
+    "VRT", "VZ", "WFC", "WMT", "XOM", "HPE", "MSTR", "PANW", "ZS", "QQQ",
+    "SPY", "SMH"
 ]
+
+INDEX_SYMBOLS = ["SPX", "VIX"]
 
 NOTES = {
     "NVDA": "AI chip leader and current mega-cap heavyweight",
@@ -137,7 +141,7 @@ def main():
     if existing_path.exists():
         existing = json.loads(existing_path.read_text(encoding="utf-8"))
 
-    quotes = fetch_quotes(SYMBOLS)
+    quotes = fetch_quotes(SYMBOLS + INDEX_SYMBOLS)
     quotes_by_symbol = {display_symbol(item["symbol"]): item for item in quotes if item.get("symbol")}
     now = datetime.now(timezone.utc)
     prices = {}
@@ -171,8 +175,16 @@ def main():
         })
 
     output = {
-        "updatedLabel": now.strftime("%b %d, %Y %I:%M %p UTC"),
-        "officialCloseDate": now.strftime("%b %d, %Y"),
+        "updatedLabel": (
+            now.strftime("%b %d, %Y %I:%M %p UTC")
+            if prices else
+            existing.get("updatedLabel", "Static quote snapshot")
+        ),
+        "officialCloseDate": (
+            now.strftime("%b %d, %Y")
+            if prices else
+            existing.get("officialCloseDate", "Static quote snapshot")
+        ),
         "marketCapSnapshotLabel": (
             f"FMP snapshot generated {now.strftime('%b %d, %Y %I:%M %p UTC')}"
             if leaders else

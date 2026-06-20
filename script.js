@@ -724,9 +724,12 @@ function renderCards() {
     const asset = assetBySymbol(symbol);
     const stock = topStocks.find(item => item.symbol === symbol);
     const quote = quoteSnapshot?.prices?.[symbol];
-    const price = quote?.current || asset?.price || (stock ? syntheticPrice(stock.symbol, stock.rank) : 0);
     const valuation = stock ? valuationLens(stock) : { status: "fair", label: "Fair" };
-    const name = asset?.name || stock?.name || symbol;
+    const name = asset?.name || stock?.name || watchlistName(symbol);
+    const priceLabel = quote?.current ? watchPriceLabel(symbol, quote.current) : "API pending";
+    const sourceLabel = quote?.current
+      ? `${quote.label || "API quote"} · updated ${quoteSnapshot.updatedLabel}`
+      : "Waiting for the next market-data API update.";
     return `
       <article class="card info watch-card">
         <div class="watch-head">
@@ -735,7 +738,7 @@ function renderCards() {
             <h4>${symbol}</h4>
             <p>${name}</p>
           </div>
-          <span>${price ? moneyExact(price) : "Watch"}</span>
+          <span>${priceLabel}</span>
         </div>
         <div class="watch-tags">
           <span class="${theme.includes("Strong") ? "watch-tier-secondary" : "watch-tier-core"}">${theme}</span>
@@ -743,10 +746,35 @@ function renderCards() {
         </div>
         <p><b>Why people talk about it</b><br>${insight}</p>
         <p><b>Beginner watch point</b><br>${watch}</p>
-        <small>Curated for education from recent tech and market chatter. Educational purposes only.</small>
+        <small>Price source: ${sourceLabel}. Educational purposes only.</small>
       </article>
     `;
   }).join("");
+}
+
+function watchlistName(symbol) {
+  return {
+    MRVL: "Marvell Technology",
+    PANW: "Palo Alto Networks",
+    ZS: "Zscaler",
+    SPX: "S&P 500 Index",
+    VIX: "Cboe Volatility Index",
+    SMH: "VanEck Semiconductor ETF",
+    SNOW: "Snowflake",
+    MSTR: "Strategy",
+    SMCI: "Super Micro Computer",
+    VRT: "Vertiv",
+    SOFI: "SoFi Technologies",
+    HPE: "Hewlett Packard Enterprise",
+    TSM: "Taiwan Semiconductor"
+  }[symbol] || symbol;
+}
+
+function watchPriceLabel(symbol, value) {
+  if (["SPX", "VIX"].includes(symbol)) {
+    return new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+  }
+  return moneyExact(value);
 }
 
 function renderSimulator() {
@@ -1554,6 +1582,7 @@ async function hydrateMarketData() {
     if (!response.ok) return;
     const data = await response.json();
     applyMarketData(data);
+    renderCards();
     if (document.querySelector(".top-stock-grid")) renderTopStocks();
     if (document.querySelector("#selectedAsset")) selectSimAsset(selectedSimSymbol);
   } catch {

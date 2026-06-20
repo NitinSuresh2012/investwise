@@ -1,12 +1,12 @@
 {
-  "updatedLabel": "Jun 19, 2026 11:13 PM UTC",
-  "officialCloseDate": "Jun 19, 2026",
+  "updatedLabel": "Jun 19, 2026 05:57 PM ET snapshot",
+  "officialCloseDate": "Jun 18, 2026",
   "marketCapSnapshotLabel": "Static fallback snapshot checked Jun 12, 2026",
   "prices": {
     "NVDA": {
-      "current": 205.62,
-      "close": 204.87,
-      "label": "extended-hours"
+      "current": 210.33,
+      "close": 204.65,
+      "label": "after-hours quote"
     },
     "GOOGL": {
       "current": 360.93,
@@ -19,9 +19,9 @@
       "label": "extended-hours"
     },
     "MSFT": {
-      "current": 392.69,
-      "close": 390.34,
-      "label": "extended-hours"
+      "current": 379.1,
+      "close": 378.91,
+      "label": "after-hours quote"
     },
     "AMZN": {
       "current": 241.93,
@@ -34,19 +34,139 @@
       "label": "extended-hours"
     },
     "META": {
-      "current": 572.31,
-      "close": 568.43,
-      "label": "extended-hours"
+      "current": 574.89,
+      "close": 567.58,
+      "label": "after-hours quote"
     },
     "TSLA": {
-      "current": 399.23,
-      "close": 399.15,
-      "label": "extended-hours"
+      "current": 398.5,
+      "close": 396.38,
+      "label": "after-hours quote"
     },
     "LLY": {
       "current": 1161.42,
       "close": 1160.95,
       "label": "extended-hours"
+    },
+    "TSM": {
+      "current": 462,
+      "close": 432.15,
+      "label": "after-hours quote"
+    },
+    "PLTR": {
+      "current": 128.63,
+      "close": 130.63,
+      "label": "after-hours quote"
+    },
+    "ORCL": {
+      "current": 183.68,
+      "close": 183.53,
+      "label": "after-hours quote"
+    },
+    "QCOM": {
+      "current": 226.5,
+      "close": 212.97,
+      "label": "after-hours quote"
+    },
+    "LRCX": {
+      "current": 390.04,
+      "close": 374.18,
+      "label": "after-hours quote"
+    },
+    "MU": {
+      "current": 1151.8,
+      "close": 1043.19,
+      "label": "after-hours quote"
+    },
+    "MRVL": {
+      "current": 313.57,
+      "close": 289.54,
+      "label": "after-hours quote"
+    },
+    "PANW": {
+      "current": 286.71,
+      "close": 282.13,
+      "label": "after-hours quote"
+    },
+    "ZS": {
+      "current": 124.74,
+      "close": 124.38,
+      "label": "after-hours quote"
+    },
+    "QQQ": {
+      "current": 739.83,
+      "close": 722.51,
+      "label": "after-hours quote"
+    },
+    "SPY": {
+      "current": 746.93,
+      "close": 739.06,
+      "label": "after-hours quote"
+    },
+    "SPX": {
+      "current": 7500.58,
+      "close": 7500.58,
+      "label": "index level"
+    },
+    "SMH": {
+      "current": 660.94,
+      "close": 623.97,
+      "label": "after-hours quote"
+    },
+    "VIX": {
+      "current": 16.78,
+      "close": 16.78,
+      "label": "index level"
+    },
+    "SNOW": {
+      "current": 230,
+      "close": 234.52,
+      "label": "after-hours quote"
+    },
+    "NFLX": {
+      "current": 77.33,
+      "close": 76.96,
+      "label": "after-hours quote"
+    },
+    "UBER": {
+      "current": 71.52,
+      "close": 70.91,
+      "label": "after-hours quote"
+    },
+    "MSTR": {
+      "current": 112.25,
+      "close": 116.56,
+      "label": "after-hours quote"
+    },
+    "SMCI": {
+      "current": 30.72,
+      "close": 27.78,
+      "label": "after-hours quote"
+    },
+    "INTC": {
+      "current": 134.16,
+      "close": 121.1,
+      "label": "after-hours quote"
+    },
+    "IBM": {
+      "current": 249.4,
+      "close": 262.35,
+      "label": "after-hours quote"
+    },
+    "VRT": {
+      "current": 336.6,
+      "close": 317.58,
+      "label": "after-hours quote"
+    },
+    "SOFI": {
+      "current": 17.88,
+      "close": 17.42,
+      "label": "after-hours quote"
+    },
+    "HPE": {
+      "current": 47.51,
+      "close": 48.2,
+      "label": "after-hours quote"
     }
   },
   "marketCapLeaders": [
