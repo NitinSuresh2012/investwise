@@ -363,6 +363,8 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .watch-head > span { color: var(--mint); font-weight: 1000; white-space: nowrap; }
 .watch-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
 .watch-tags > span:first-child { border-radius: 999px; background: var(--panel-2); color: var(--text); padding: 6px 9px; font-size: 12px; font-weight: 1000; }
+.watch-tags > span.watch-tier-core { background: rgba(57,229,140,.14); color: var(--mint); }
+.watch-tags > span.watch-tier-secondary { background: rgba(255,196,87,.14); color: var(--gold); }
 .watch-tags .valuation-badge { margin-top: 0; }
 
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }

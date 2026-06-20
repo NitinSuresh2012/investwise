@@ -68,24 +68,34 @@ const etfs = [
 ];
 
 const talkedAboutWatchlist = [
-  ["NVDA", "AI chip leader", "Nvidia is still one of the most watched AI names because its GPUs power many data centers and AI models.", "Watch AI chip demand, margins, and competition."],
-  ["AMD", "AI chip challenger", "AMD is talked about because investors compare its AI accelerators and CPUs with Nvidia and Intel.", "Watch data center growth and whether big cloud customers buy more AMD chips."],
-  ["INTC", "Turnaround chip story", "Intel gets attention because it is trying to rebuild its chip manufacturing lead while competing in PCs, servers, and AI.", "Watch factory progress, cash flow, and product execution."],
-  ["MU", "AI memory demand", "Micron makes memory chips used in AI servers, phones, PCs, and data centers, so it often moves with AI hardware demand.", "Watch memory prices because this business can be cyclical."],
-  ["AVGO", "AI networking", "Broadcom is popular with investors because AI data centers need networking chips and infrastructure software.", "Watch customer concentration and chip cycle risk."],
-  ["AAPL", "Consumer tech giant", "Apple is always talked about because of iPhone demand, services revenue, and how it adds AI features into its products.", "Watch upgrade cycles, China sales, and services growth."],
-  ["MSFT", "Cloud and AI", "Microsoft is watched because Azure, Office, GitHub, gaming, and AI tools touch many businesses every day.", "Watch cloud growth, AI spending, and competition."],
-  ["GOOGL", "Search, ads, and AI", "Alphabet is talked about because Google Search, YouTube, Android, Cloud, and AI products create huge cash flow.", "Watch ad growth, AI competition, and regulation."],
-  ["AMZN", "Cloud plus shopping", "Amazon gets attention because AWS is a major cloud platform while retail, ads, and logistics keep expanding.", "Watch cloud margins and retail profitability."],
-  ["META", "Social apps and AI ads", "Meta is watched because Facebook, Instagram, WhatsApp, and Threads reach billions of people and use AI to improve ads.", "Watch ad demand, privacy rules, and spending discipline."],
-  ["TSLA", "EV and autonomy", "Tesla stays highly discussed because investors debate EV demand, pricing, energy storage, and self-driving progress.", "Watch deliveries, margins, and autonomy expectations."],
-  ["PLTR", "AI software", "Palantir is talked about because it sells data and AI software to governments and companies.", "Watch revenue growth, valuation, and contract quality."],
-  ["ORCL", "Cloud infrastructure", "Oracle is watched because more AI and database workloads are moving into its cloud infrastructure.", "Watch cloud capacity, debt, and customer growth."],
-  ["QCOM", "Mobile and edge AI", "Qualcomm is discussed because its chips power phones, cars, devices, and possible on-device AI.", "Watch smartphone demand and diversification beyond phones."],
-  ["LRCX", "Chip equipment", "Lam Research matters because chip makers need equipment to build advanced semiconductors.", "Watch semiconductor spending cycles."],
-  ["NFLX", "Streaming leader", "Netflix is watched because it leads streaming, grows ads, and has strong pricing power.", "Watch subscriber growth, content costs, and competition."],
-  ["UBER", "Platform growth", "Uber gets attention because rides, delivery, and advertising can grow together at global scale.", "Watch margins, regulation, and competition."],
-  ["QQQ", "Tech-heavy ETF", "QQQ is a popular way to follow many large Nasdaq growth companies instead of betting on only one stock.", "Watch concentration because a few giant tech names can drive a lot of the ETF."]
+  ["NVDA", "Core AI watch", "The #1 AI infrastructure play and the benchmark investors use for the whole AI chip sector.", "Watch data center GPU demand, margins, and whether expectations get too high."],
+  ["MSFT", "Core AI watch", "Azure, Copilot, and its OpenAI stake make Microsoft one of the clearest AI monetization leaders.", "Watch Azure growth, Copilot adoption, and AI spending discipline."],
+  ["META", "Core AI watch", "Meta has strong ad-tech execution and uses AI to improve ranking, targeting, content tools, and efficiency.", "Watch ad growth, AI capex, and whether spending turns into better profits."],
+  ["TSLA", "Core AI watch", "Robotics, FSD, EVs, and energy make Tesla a market-moving story whether investors love it or hate it.", "Watch deliveries, margins, autonomy updates, and energy growth."],
+  ["TSM", "Core AI watch", "TSMC makes the advanced chips everyone needs, so it is a leading indicator for semiconductors.", "Watch capacity, customer demand, and geopolitical risk."],
+  ["PLTR", "Core AI watch", "Palantir is an enterprise AI software bellwether for companies and governments using data platforms.", "Watch commercial customer growth, government contracts, and valuation."],
+  ["ORCL", "Core AI watch", "Oracle combines cloud databases with AI infrastructure and large data center contracts.", "Watch cloud backlog, data center capacity, and debt levels."],
+  ["QCOM", "Core AI watch", "Qualcomm matters for AI PCs and mobile chips, and it connects to device research like HPQ and HPE.", "Watch phone demand, AI PC adoption, and diversification beyond handsets."],
+  ["LRCX", "Core AI watch", "Lam Research sells semiconductor equipment, so it can signal early-cycle chip capital spending.", "Watch foundry and memory capex plans."],
+  ["MU", "Core AI watch", "Memory is a bottleneck for AI training and inference, and Micron is very cyclical.", "Watch HBM demand, memory pricing, and cycle risk."],
+  ["MRVL", "Core AI watch", "Marvell is a custom AI silicon and networking play growing with hyperscale data center demand.", "Watch custom ASIC wins and data center revenue growth."],
+  ["PANW", "Core AI watch", "Palo Alto Networks is a cybersecurity category leader as AI raises security needs.", "Watch platformization progress, billings, and competition."],
+  ["ZS", "Core AI watch", "Zscaler is a cloud security leader paired with PANW for cybersecurity context.", "Watch revenue growth, enterprise demand, and margin expansion."],
+  ["QQQ", "Core AI watch", "QQQ is the tech-heavy Nasdaq benchmark that frames many AI and growth-stock moves.", "Watch concentration because mega-cap tech can drive much of the ETF."],
+  ["SPY", "Core AI watch", "SPY tracks the S&P 500 and gives broad-market context for whether tech is leading or lagging.", "Watch if your watchlist is beating or trailing the broad market."],
+  ["SPX", "Core AI watch", "SPX is the S&P 500 index benchmark, useful context for all stock moves.", "Watch index direction before judging one stock in isolation."],
+  ["SMH", "Core AI watch", "SMH is a simple way to track the whole semiconductor sector in one ticker.", "Watch whether semis as a group confirm or reject individual chip-stock moves."],
+  ["VIX", "Core AI watch", "VIX is the market fear gauge, always useful when volatility changes investor behavior.", "Watch spikes because they can explain why good stocks fall together."],
+  ["SNOW", "Strong, pick battles", "Snowflake is a cloud data bellwether, but growth has slowed compared with earlier expectations.", "Watch product adoption, AI data tools, and revenue reacceleration."],
+  ["NFLX", "Strong, pick battles", "Netflix has ad-supported streaming and live sports momentum, but it is not a pure AI or semi play.", "Watch ad tier growth, live events, and content spending."],
+  ["UBER", "Strong, pick battles", "Uber has autonomy optionality through partnerships such as Waymo, plus a global mobility platform.", "Watch ride demand, delivery margins, and autonomous vehicle risk."],
+  ["MSTR", "Strong, pick battles", "Strategy is a Bitcoin proxy, useful if you track crypto correlation with risk assets.", "Watch Bitcoin price, leverage, and premium/discount to holdings."],
+  ["SMCI", "Strong, pick battles", "Supermicro has AI server demand upside, but it carries higher accounting and execution risk.", "Watch margins, audits, customer concentration, and server demand."],
+  ["INTC", "Strong, pick battles", "Intel is a turnaround story and has lagged badly, but it still matters for chip-sector sentiment.", "Watch foundry progress, product roadmap, cash burn, and execution."],
+  ["IBM", "Strong, pick battles", "IBM offers steadier enterprise AI through watsonx, but it is more stable than high-growth.", "Watch consulting demand, software growth, and free cash flow."],
+  ["VRT", "Strong, pick battles", "Vertiv provides data center power and cooling, an underrated AI infrastructure layer.", "Watch data center buildout demand and margin durability."],
+  ["SOFI", "Strong, pick battles", "SoFi is a fintech growth name, but it is more macro-sensitive than core AI infrastructure.", "Watch loan demand, credit quality, deposits, and interest rates."],
+  ["HPE", "Strong, pick battles", "HPE has AI servers and networking exposure, overlapping with HPQ-style hardware research.", "Watch AI server orders, networking demand, and hardware margins."]
 ];
 
 const lessonDetails = {
@@ -411,6 +421,7 @@ const logoDomains = {
   MMM: "3m.com",
   MO: "altria.com",
   MRK: "merck.com",
+  MRVL: "marvell.com",
   MS: "morganstanley.com",
   MSFT: "microsoft.com",
   MU: "micron.com",
@@ -425,16 +436,23 @@ const logoDomains = {
   PG: "pginvestor.com",
   PLTR: "palantir.com",
   PM: "pmi.com",
+  PANW: "paloaltonetworks.com",
   QCOM: "qualcomm.com",
   RTX: "rtx.com",
   SBUX: "starbucks.com",
   SCHW: "schwab.com",
+  SMCI: "supermicro.com",
+  SMH: "vaneck.com",
+  SNOW: "snowflake.com",
   SO: "southerncompany.com",
+  SOFI: "sofi.com",
+  SPX: "spglobal.com",
   SPG: "simon.com",
   T: "att.com",
   TMO: "thermofisher.com",
   TMUS: "t-mobile.com",
   TSLA: "tesla.com",
+  TSM: "tsmc.com",
   TXN: "ti.com",
   UBER: "uber.com",
   UNH: "unitedhealthgroup.com",
@@ -442,6 +460,8 @@ const logoDomains = {
   UPS: "ups.com",
   USB: "usbank.com",
   V: "visa.com",
+  VIX: "cboe.com",
+  VRT: "vertiv.com",
   VZ: "verizon.com",
   WFC: "wellsfargo.com",
   WMT: "corporate.walmart.com",
@@ -449,7 +469,11 @@ const logoDomains = {
   QQQ: "invesco.com",
   VOO: "vanguard.com",
   VTI: "vanguard.com",
-  SPY: "ssga.com"
+  SPY: "ssga.com",
+  ZS: "zscaler.com",
+  HPE: "hpe.com",
+  HPQ: "hp.com",
+  MSTR: "strategy.com"
 };
 
 const logoOverrides = {
@@ -521,6 +545,7 @@ const simpleIconSlugs = {
   MMM: "3m",
   MO: "altria",
   MRK: "merck",
+  MRVL: "marvell",
   MS: "morganstanley",
   MSFT: "microsoft",
   MU: "microntechnology",
@@ -530,6 +555,7 @@ const simpleIconSlugs = {
   NOW: "servicenow",
   NVDA: "nvidia",
   ORCL: "oracle",
+  PANW: "paloaltonetworks",
   PEP: "pepsi",
   PFE: "pfizer",
   PG: "procterandgamble",
@@ -539,12 +565,16 @@ const simpleIconSlugs = {
   RTX: "rtx",
   SBUX: "starbucks",
   SCHW: "charlesschwab",
+  SMCI: "supermicro",
+  SNOW: "snowflake",
   SO: "southerncompany",
+  SOFI: "sofi",
   SPG: "simon",
   T: "atandt",
   TMO: "thermofisherscientific",
   TMUS: "tmobile",
   TSLA: "tesla",
+  TSM: "tsmc",
   TXN: "texasinstruments",
   UBER: "uber",
   UNH: "unitedhealthgroup",
@@ -552,10 +582,14 @@ const simpleIconSlugs = {
   UPS: "ups",
   USB: "usbank",
   V: "visa",
+  VRT: "vertiv",
   VZ: "verizon",
   WFC: "wellsfargo",
   WMT: "walmart",
-  XOM: "exxonmobil"
+  XOM: "exxonmobil",
+  ZS: "zscaler",
+  HPE: "hpe",
+  MSTR: "microstrategy"
 };
 
 const logoBrandColors = {
@@ -704,7 +738,7 @@ function renderCards() {
           <span>${price ? moneyExact(price) : "Watch"}</span>
         </div>
         <div class="watch-tags">
-          <span>${theme}</span>
+          <span class="${theme.includes("Strong") ? "watch-tier-secondary" : "watch-tier-core"}">${theme}</span>
           <span class="valuation-badge ${valuation.status}">${valuation.label}</span>
         </div>
         <p><b>Why people talk about it</b><br>${insight}</p>
