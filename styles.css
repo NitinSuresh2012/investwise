@@ -41,7 +41,11 @@ button, input, select { font: inherit; }
   padding: 12px 0; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(20px);
 }
 .brand { display: flex; align-items: center; gap: 12px; }
-.logo { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 18px; background: var(--mint); color: #08110d; font-size: 30px; font-weight: 1000; box-shadow: 0 22px 80px rgba(57,229,140,.25); }
+.logo {
+  display: grid; place-items: center; width: 52px; height: 52px; border-radius: 18px;
+  background: transparent url("./assets/brand/buddha-logo.png") center / contain no-repeat;
+  color: transparent; font-size: 0; font-weight: 1000; box-shadow: 0 22px 80px rgba(255,196,87,.22);
+}
 .brand p, .section-title p { margin: 0; color: var(--mint); font-size: 12px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
 .brand h1 { margin: 2px 0 0; font-size: clamp(18px, 4vw, 25px); line-height: 1.05; }
 .icon-btn { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--text); font-size: 20px; }
@@ -364,7 +368,7 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .watch-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
 .watch-tags > span:first-child { border-radius: 999px; background: var(--panel-2); color: var(--text); padding: 6px 9px; font-size: 12px; font-weight: 1000; }
 .watch-tags > span.watch-tier-core { background: rgba(57,229,140,.14); color: var(--mint); }
-.watch-tags > span.watch-tier-secondary { background: rgba(255,196,87,.14); color: var(--gold); }
+.watch-tags > span.watch-tier-secondary { background: rgba(255,196,87,.14); color: #ffc457; }
 .watch-tags .valuation-badge { margin-top: 0; }
 
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
