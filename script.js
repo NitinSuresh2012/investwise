@@ -446,7 +446,11 @@ const logoDomains = {
   VZ: "verizon.com",
   WFC: "wellsfargo.com",
   WMT: "walmart.com",
-  XOM: "exxonmobil.com"
+  XOM: "exxonmobil.com",
+  QQQ: "invesco.com",
+  VOO: "vanguard.com",
+  VTI: "vanguard.com",
+  SPY: "ssga.com"
 };
 
 const simpleIconSlugs = {
@@ -1605,12 +1609,11 @@ function logoUrl(symbol) {
 }
 
 function companyLogoMarkup(symbol, name) {
-  const special = specialCompanyLogoMarkup(symbol, name);
-  if (special) return special;
   const source = logoUrl(symbol);
   const safeSymbol = symbol.replace(".B", "").slice(0, 5);
   if (!source) {
-    return `<div class="logo-wrap ticker-logo" title="${name} logo badge"><span class="logo-fallback visible">${safeSymbol}</span></div>`;
+    const special = specialCompanyLogoMarkup(symbol, name);
+    return special || `<div class="logo-wrap ticker-logo" title="${name} logo badge"><span class="logo-fallback visible">${safeSymbol}</span></div>`;
   }
   return `
     <div class="logo-wrap" title="${name} logo">
@@ -1642,6 +1645,9 @@ function specialCompanyLogoMarkup(symbol, name) {
 
 function logoSources(symbol) {
   const sources = [];
+  if (logoDomains[symbol]) {
+    sources.push(`https://cdn.tickerlogos.com/${logoDomains[symbol]}`);
+  }
   if (simpleIconSlugs[symbol]) {
     const color = logoBrandColors[symbol];
     sources.push(color ? `https://cdn.simpleicons.org/${simpleIconSlugs[symbol]}/${color}` : `https://cdn.simpleicons.org/${simpleIconSlugs[symbol]}`);

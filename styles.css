@@ -350,6 +350,8 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .detail-box p { margin: 0; color: var(--muted); line-height: 1.6; }
 .detail-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .detail-links a { border-radius: 999px; background: var(--mint); color: #07100c; padding: 9px 12px; font-weight: 1000; text-decoration: none; }
+.site-footer { margin: 18px 0 32px; color: var(--muted); text-align: center; font-size: 12px; line-height: 1.5; }
+.site-footer a { color: var(--mint); font-weight: 1000; text-decoration: none; }
 .watch-card { display: flex; flex-direction: column; gap: 10px; }
 .watch-card p { margin: 0; }
 .watch-card small { color: var(--muted); line-height: 1.45; }
