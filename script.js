@@ -367,10 +367,9 @@ const logoDomains = {
   BNY: "bnymellon.com",
   "BRK.B": "berkshirehathaway.com",
   C: "citigroup.com",
-  CAT: "cat.com",
+  CAT: "caterpillar.com",
   CL: "colgatepalmolive.com",
-  CMCSA: "comcast.com",
-  COF: "capitalone.com",
+  CMCSA: "corporate.comcast.com",
   COP: "conocophillips.com",
   COST: "costco.com",
   CRM: "salesforce.com",
@@ -423,7 +422,7 @@ const logoDomains = {
   ORCL: "oracle.com",
   PEP: "pepsico.com",
   PFE: "pfizer.com",
-  PG: "pg.com",
+  PG: "pginvestor.com",
   PLTR: "palantir.com",
   PM: "pmi.com",
   QCOM: "qualcomm.com",
@@ -445,12 +444,16 @@ const logoDomains = {
   V: "visa.com",
   VZ: "verizon.com",
   WFC: "wellsfargo.com",
-  WMT: "walmart.com",
-  XOM: "exxonmobil.com",
+  WMT: "corporate.walmart.com",
+  XOM: "corporate.exxonmobil.com",
   QQQ: "invesco.com",
   VOO: "vanguard.com",
   VTI: "vanguard.com",
   SPY: "ssga.com"
+};
+
+const logoOverrides = {
+  COF: "https://upload.wikimedia.org/wikipedia/commons/9/98/Capital_One_logo.svg"
 };
 
 const simpleIconSlugs = {
@@ -477,7 +480,6 @@ const simpleIconSlugs = {
   CAT: "caterpillar",
   CL: "colgate",
   CMCSA: "comcast",
-  COF: "capitalone",
   COP: "conocophillips",
   COST: "costco",
   CRM: "salesforce",
@@ -1645,7 +1647,9 @@ function specialCompanyLogoMarkup(symbol, name) {
 
 function logoSources(symbol) {
   const sources = [];
-  if (logoDomains[symbol]) {
+  if (logoOverrides[symbol]) {
+    sources.push(logoOverrides[symbol]);
+  } else if (logoDomains[symbol]) {
     sources.push(`https://cdn.tickerlogos.com/${logoDomains[symbol]}`);
   }
   if (simpleIconSlugs[symbol]) {
