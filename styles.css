@@ -184,15 +184,26 @@ select, input { min-width: 0; width: 100%; border: 1px solid var(--line); border
 .saving-step b { color: var(--mint); }
 input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
 .answer { margin-top: 14px; color: var(--text); line-height: 1.7; }
+.coach-prompts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.coach-prompts button {
+  border: 1px solid rgba(57,229,140,.28); border-radius: 999px; background: rgba(57,229,140,.1);
+  color: var(--text); padding: 9px 11px; font-size: 12px; font-weight: 1000; cursor: pointer;
+}
+.coach-prompts button:hover { transform: translateY(-1px); border-color: rgba(57,229,140,.55); }
 .coach-response { display: grid; gap: 12px; }
 .coach-agent-head { display: flex; align-items: center; gap: 12px; border-radius: 20px; background: linear-gradient(145deg, rgba(57,229,140,.18), var(--panel-2)); padding: 14px; }
 .coach-avatar { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 16px; background: var(--mint); color: #07100c; font-weight: 1000; }
 .coach-agent-head h4 { margin: 0; font-size: 18px; }
 .coach-agent-head p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
-.coach-response div:not(.coach-agent-head) { border-radius: 18px; background: color-mix(in srgb, var(--panel-2) 78%, transparent); padding: 12px; }
+.coach-response div:not(.coach-agent-head):not(.coach-grid):not(.coach-plan) { border-radius: 18px; background: color-mix(in srgb, var(--panel-2) 78%, transparent); padding: 12px; }
 .coach-response b { color: var(--mint); }
 .coach-response p { margin: 6px 0 0; color: var(--muted); line-height: 1.55; }
 .coach-response .disclaimer { color: var(--coral); font-weight: 1000; }
+.coach-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.coach-cardlet { border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--panel-2) 78%, transparent); padding: 12px; }
+.coach-cardlet strong { display: block; color: var(--text); font-size: 14px; }
+.coach-cardlet small { display: block; margin-top: 4px; color: var(--muted); line-height: 1.45; }
+.coach-cardlet .price-line { color: var(--mint); font-weight: 1000; }
 .coach-plan { display: grid; gap: 8px; margin-top: 8px; }
 .coach-plan span { border-radius: 14px; background: rgba(57,229,140,.1); color: var(--text); padding: 9px 10px; font-size: 13px; font-weight: 850; line-height: 1.35; }
 .source-note { margin: 12px 0 0; color: var(--muted); line-height: 1.55; }
@@ -380,6 +391,7 @@ input[type="range"] { accent-color: var(--mint); padding: 0; border: 0; }
   .top-stock-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .market-cap-leaders { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .platform-grid, .check-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .coach-grid { grid-template-columns: 1fr; }
   .portfolio-profile { align-items: stretch; flex-direction: column; }
   .portfolio-profile-stats { justify-content: stretch; }
   .portfolio-profile-stats span { flex: 1; }

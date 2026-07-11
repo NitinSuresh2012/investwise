@@ -263,7 +263,13 @@
               <input id="coachQuestion" value="What is an ETF?" />
               <button id="coachBtn">Ask</button>
             </div>
-            <div id="coachAnswer" class="answer">An ETF is a basket of investments you can buy with one ticker, like getting a diversified starter pack. Educational purposes only.</div>
+            <div class="coach-prompts" aria-label="FinCoach example questions">
+              <button type="button" data-coach-prompt="Build me a simple beginner portfolio plan">Beginner portfolio</button>
+              <button type="button" data-coach-prompt="Explain QQQ vs SPY in simple words">QQQ vs SPY</button>
+              <button type="button" data-coach-prompt="How should I budget my money each month?">Budget plan</button>
+              <button type="button" data-coach-prompt="Analyze NVDA risk for learning">Analyze NVDA</button>
+            </div>
+            <div id="coachAnswer" class="answer">Ask FinCoach about ETFs, stocks, budgeting, risk, or a ticker like NVDA. It will summarize your question, explain the idea, and give a simple learning plan. Educational purposes only.</div>
           </article>
         </section>
 
